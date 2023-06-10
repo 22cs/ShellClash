@@ -1,29 +1,29 @@
-# ï¿½ï¿½ï¿½ï¿½	Ëµï¿½ï¿½	ï¿½ï¿½Ö·	ï¿½ï¿½ï¿½ï¿½Ëµï¿½ï¿½	(ï¿½ï¿½ï¿½Í£ï¿½1-ï¿½Ô¶ï¿½Ô´;2-ï¿½Ö¶ï¿½Ô´;3-ï¿½ï¿½ï¿½ï¿½sub;4-Î´ï¿½ï¿½ï¿½ï¿½sub;5-ï¿½ï¿½ï¿½ï¿½ï¿½Ö·)
+# ÀàÐÍ	ËµÃ÷	µØÖ·	ÆäËûËµÃ÷	(ÀàÐÍ£º1-×Ô¶¯Ô´;2-ÊÖ¶¯Ô´;3-¼ÓÃÜsub;4-Î´¼ÓÃÜsub;5-¹æÔòµØÖ·)
 
-1	Jsdelivr-CDNÔ´	https://fastly.jsdelivr.net/gh/juewuy/ShellClash@master	ï¿½ï¿½ï¿½ï¿½ï¿½	
-1	ShellClashË½ï¿½ï¿½Ô´1	https://gh.jwsc.eu.org/master	ï¿½ï¿½ï¿½ï¿½ï¿½	
-1	ShellClashË½ï¿½ï¿½Ô´2	https://gh.shellclash.workers.dev/https://raw.githubusercontent.com/juewuy/ShellClash	ï¿½ï¿½ï¿½ï¿½ï¿½
+1	Jsdelivr-CDNÔ´	https://fastly.jsdelivr.net/gh/juewuy/ShellClash@master	¹«²â°æ	
+1	ShellClashË½ÈËÔ´1	https://gh.jwsc.eu.org/master	¹«²â°æ	
+1	ShellClashË½ÈËÔ´2	https://gh.shellclash.workers.dev/https://raw.githubusercontent.com/juewuy/ShellClash	¹«²â°æ
 
-2	GithubÔ´(ï¿½ï¿½clashï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)	https://raw.gi22cscontent.com/GuangDai/ShellClash	ï¿½È¶ï¿½ï¿½ï¿½
-2	GithubÔ´(ï¿½ï¿½clashï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)	https://raw.gi22cscontent.com/GuangDai/ShellClash/main	ï¿½ï¿½ï¿½ï¿½ï¿½
-2	(ï¿½ï¿½ï¿½TGï¿½ï¿½ï¿½ï¿½ï¿½ï¿½:\033[4;36mhttps://t.me/ShellClash\033[0m)	http://t.jwsc.eu.org	ï¿½Ú²ï¿½ï¿½	
+2	GithubÔ´(Ðëclash·þÎñÆôÓÃ)	https://raw.githubusercontent.com/22cs/ShellClash	ÎÈ¶¨°æ
+2	GithubÔ´(Ðëclash·þÎñÆôÓÃ)	https://raw.githubusercontent.com/22cs/ShellClash/main	¹«²â°æ
+2	(Çë¼ÓTGÌÖÂÛ×é:\033[4;36mhttps://t.me/ShellClash\033[0m)	http://t.jwsc.eu.org	ÄÚ²â°æ	
 			
-3	Ç½ï¿½ï¿½ï¿½á¹©	https://api.dler.io		
-3	ï¿½ï¿½ï¿½ï¿½ï¿½á¹©,Ö§ï¿½ï¿½vless	https://api.v1.mk		
-3	SUBï¿½ï¿½ï¿½ï¿½ï¿½á¹©	https://sub.xeton.dev		
-3	Æ·ï¿½ï¿½ï¿½á¹©,Ö§ï¿½ï¿½vless	https://v.id9.cc		
-3	Ã¨ï¿½ï¿½ï¿½á¹©	https://sub.maoxiongnet.com		
+3	Ç½¶´Ìá¹©	https://api.dler.io		
+3	·ÊÑòÌá¹©,Ö§³Övless	https://api.v1.mk		
+3	SUB×÷ÕßÌá¹©	https://sub.xeton.dev		
+3	Æ·ÔÆÌá¹©,Ö§³Övless	https://v.id9.cc		
+3	Ã¨ÐÜÌá¹©	https://sub.maoxiongnet.com		
 
-4	ï¿½ï¿½ï¿½ï¿½ï¿½á¹©,ï¿½ï¿½httpï¿½ï¿½ï¿½ï¿½	http://sub2.jwsc.eu.org		
+4	×÷ÕßÌá¹©,ÏÞhttpÁ¬½Ó	http://sub2.jwsc.eu.org		
 			
-5	Acl4SSRÈ«ï¿½ï¿½ï¿½Å»ï¿½ï¿½ï¿½(ï¿½Æ¼ï¿½)	htt22cshub.com/GuangDai/ShellClash/raw/main/rules/ShellClash.ini
-5	Acl4SSRï¿½ï¿½ï¿½ï¿½ï¿½Å»ï¿½ï¿½ï¿½(ï¿½Æ¼ï¿½)22cs/github.com/GuangDai/ShellClash/raw/main/rules/ShellClash_Mini.ini
-5	Acl4SSRÈ«ï¿½ï¿½ï¿½Å»ï¿½+È¥ï¿½ï¿½ï¿½ï¿½ï¿½Ç¿	ht22csthub.com/GuangDai/ShellClash/raw/main/rules/ShellClash_Block.ini
-5	Acl4SSRï¿½ï¿½ï¿½ï¿½ï¿½(ï¿½Êºï¿½ï¿½Ô½ï¿½ï¿½Úµï¿½22cs//github.com/GuangDai/ShellClash/raw/main/rules/ShellClash_Nano.ini
-5	Acl4SSRï¿½ï¿½ï¿½ï¿½&ï¿½ï¿½Ï·ï¿½ï¿½Ç¿	htt22cshub.com/GuangDai/ShellClash/raw/main/rules/ShellClash_Full.ini
-5	Acl4SSRï¿½ï¿½ï¿½ï¿½&ï¿½ï¿½Ï·&È¥ï¿½ï¿½ï¿½ï¿½ï¿½Ç¿(ï¿½ï¿½ï¿½ï¿½ï¿½22cs	https://github.com/GuangDai/ShellClash/raw/main/rules/ShellClash_Full_Block.ini
-5	ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ò¾«¼ï¿½ï¿½(ï¿½Æ¼ï¿½)	https://gist.githubusercontent.com/tindy2013/1fa08640a9088ac8652dbd40c5d2715b/raw/lhie1_clash.ini		
-5	ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½	https://gist.githubusercontent.com/tindy2013/1fa08640a9088ac8652dbd40c5d2715b/raw/lhie1_dler.ini		
-5	ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß¼ï¿½ï¿½ï¿½	https://gist.githubusercontent.com/tindy2013/1fa08640a9088ac8652dbd40c5d2715b/raw/connershua_pro.ini		
-5	ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½-ï¿½Ø¹ï¿½×¨ï¿½ï¿½	https://gist.githubusercontent.com/tindy2013/1fa08640a9088ac8652dbd40c5d2715b/raw/connershua_backtocn.ini		
-5	ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½-Ç½ï¿½ï¿½×¨ï¿½ï¿½	https://gist.githubusercontent.com/tindy2013/1fa08640a9088ac8652dbd40c5d2715b/raw/dlercloud_lige_platinum.ini		
+5	Acl4SSRÈ«ÄÜÓÅ»¯°æ(ÍÆ¼ö)	https://github.com/22cs/ShellClash/raw/main/rules/ShellClash.ini
+5	Acl4SSR¾«¼òÓÅ»¯°æ(ÍÆ¼ö)	https://github.com/22cs/ShellClash/raw/main/rules/ShellClash_Mini.ini
+5	Acl4SSRÈ«ÄÜÓÅ»¯+È¥¹ã¸æÔöÇ¿	https://github.com/22cs/ShellClash/raw/main/rules/ShellClash_Block.ini
+5	Acl4SSR¼«¼ò°æ(ÊÊºÏ×Ô½¨½Úµã)	https://github.com/22cs/ShellClash/raw/main/rules/ShellClash_Nano.ini
+5	Acl4SSR·ÖÁ÷&ÓÎÏ·ÔöÇ¿	https://github.com/22cs/ShellClash/raw/main/rules/ShellClash_Full.ini
+5	Acl4SSR·ÖÁ÷&ÓÎÏ·&È¥¹ã¸æÔöÇ¿(µÍÐÔÄÜÉè±¸É÷ÓÃ)	https://github.com/22cs/ShellClash/raw/main/rules/ShellClash_Full_Block.ini
+5	¶´Ö÷¹æÔò¾«¼ò°æ(ÍÆ¼ö)	https://gist.githubusercontent.com/tindy2013/1fa08640a9088ac8652dbd40c5d2715b/raw/lhie1_clash.ini		
+5	¶´Ö÷¹æÔòÖØ¶ÈÍêÕû°æ	https://gist.githubusercontent.com/tindy2013/1fa08640a9088ac8652dbd40c5d2715b/raw/lhie1_dler.ini		
+5	Éñ»ú¹æÔò¸ß¼¶°æ	https://gist.githubusercontent.com/tindy2013/1fa08640a9088ac8652dbd40c5d2715b/raw/connershua_pro.ini		
+5	Éñ»ú¹æÔò-»Ø¹ú×¨ÓÃ	https://gist.githubusercontent.com/tindy2013/1fa08640a9088ac8652dbd40c5d2715b/raw/connershua_backtocn.ini		
+5	Àî¸ç¹æÔò-Ç½¶´×¨ÓÃ	https://gist.githubusercontent.com/tindy2013/1fa08640a9088ac8652dbd40c5d2715b/raw/dlercloud_lige_platinum.ini		
