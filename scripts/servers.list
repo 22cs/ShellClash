@@ -1,0 +1,29 @@
+# ����	˵��	��ַ	����˵��	(���ͣ�1-�Զ�Դ;2-�ֶ�Դ;3-����sub;4-δ����sub;5-�����ַ)
+
+1	Jsdelivr-CDNԴ	https://fastly.jsdelivr.net/gh/juewuy/ShellClash@master	�����	
+1	ShellClash˽��Դ1	https://gh.jwsc.eu.org/master	�����	
+1	ShellClash˽��Դ2	https://gh.shellclash.workers.dev/https://raw.githubusercontent.com/juewuy/ShellClash	�����
+
+2	GithubԴ(��clash��������)	https://raw.gi22cscontent.com/GuangDai/ShellClash	�ȶ���
+2	GithubԴ(��clash��������)	https://raw.gi22cscontent.com/GuangDai/ShellClash/main	�����
+2	(���TG������:\033[4;36mhttps://t.me/ShellClash\033[0m)	http://t.jwsc.eu.org	�ڲ��	
+			
+3	ǽ���ṩ	https://api.dler.io		
+3	�����ṩ,֧��vless	https://api.v1.mk		
+3	SUB�����ṩ	https://sub.xeton.dev		
+3	Ʒ���ṩ,֧��vless	https://v.id9.cc		
+3	è���ṩ	https://sub.maoxiongnet.com		
+
+4	�����ṩ,��http����	http://sub2.jwsc.eu.org		
+			
+5	Acl4SSRȫ���Ż���(�Ƽ�)	htt22cshub.com/GuangDai/ShellClash/raw/main/rules/ShellClash.ini
+5	Acl4SSR�����Ż���(�Ƽ�)22cs/github.com/GuangDai/ShellClash/raw/main/rules/ShellClash_Mini.ini
+5	Acl4SSRȫ���Ż�+ȥ�����ǿ	ht22csthub.com/GuangDai/ShellClash/raw/main/rules/ShellClash_Block.ini
+5	Acl4SSR�����(�ʺ��Խ��ڵ�22cs//github.com/GuangDai/ShellClash/raw/main/rules/ShellClash_Nano.ini
+5	Acl4SSR����&��Ϸ��ǿ	htt22cshub.com/GuangDai/ShellClash/raw/main/rules/ShellClash_Full.ini
+5	Acl4SSR����&��Ϸ&ȥ�����ǿ(�����22cs	https://github.com/GuangDai/ShellClash/raw/main/rules/ShellClash_Full_Block.ini
+5	�������򾫼��(�Ƽ�)	https://gist.githubusercontent.com/tindy2013/1fa08640a9088ac8652dbd40c5d2715b/raw/lhie1_clash.ini		
+5	���������ض�������	https://gist.githubusercontent.com/tindy2013/1fa08640a9088ac8652dbd40c5d2715b/raw/lhie1_dler.ini		
+5	�������߼���	https://gist.githubusercontent.com/tindy2013/1fa08640a9088ac8652dbd40c5d2715b/raw/connershua_pro.ini		
+5	�������-�ع�ר��	https://gist.githubusercontent.com/tindy2013/1fa08640a9088ac8652dbd40c5d2715b/raw/connershua_backtocn.ini		
+5	������-ǽ��ר��	https://gist.githubusercontent.com/tindy2013/1fa08640a9088ac8652dbd40c5d2715b/raw/dlercloud_lige_platinum.ini		
