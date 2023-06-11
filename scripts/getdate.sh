@@ -1,13 +1,13 @@
 #!/bin/bash
 # Copyright (C) 22cs
 
-error_down(){
-	echo -e  "\033[33m请尝试切换至其他安装源后重新下载！\033[0m" 
+error_down() {
+	echo -e "\033[33m请尝试切换至其他安装源后重新下载！\033[0m"
 	sleep 1
 	setserver
 }
 #导入订阅、配置文件相关
-linkconfig(){
+linkconfig() {
 	echo -----------------------------------------------
 	echo 当前使用规则为：$rule_link
 	echo " 1	Acl4SSR全能优化版(推荐)"
@@ -23,44 +23,44 @@ linkconfig(){
 	echo -----------------------------------------------
 	echo 0 返回上级菜单
 	read -p "请输入对应数字 > " num
-	if [ -z "$num" ] || [ "$num" -gt 10 ];then
+	if [ -z "$num" ] || [ "$num" -gt 10 ]; then
 		errornum
-	elif [ "$num" = 0 ];then
-		echo 
-	elif [ "$num" -le 10 ];then
+	elif [ "$num" = 0 ]; then
+		echo
+	elif [ "$num" -le 10 ]; then
 		#将对应标记值写入mark
 		rule_link=$num
 		setconfig rule_link $rule_link
-		echo -----------------------------------------------	  
+		echo -----------------------------------------------
 		echo -e "\033[32m设置成功！返回上级菜单\033[0m"
 	fi
 }
-linkserver(){
+linkserver() {
 	echo -----------------------------------------------
 	echo -e "\033[36m以下为互联网采集的第三方服务器，具体安全性请自行斟酌！\033[0m"
 	echo -e "\033[32m感谢以下作者的无私奉献！！！\033[0m"
 	echo 当前使用后端为：$server_link
-	echo 1 api.dler.io			（墙洞提供）
-	echo 2 api.v1.mk			（肥羊提供,支持vless）
-	echo 3 sub.xeton.dev		（SUB作者提供）
-	echo 4 v.id9.cc				（品云提供,支持vless）
-	echo 5 sub.maoxiongnet.com	（猫熊提供）
+	echo 1 api.dler.io （墙洞提供）
+	echo 2 api.v1.mk （肥羊提供,支持vless）
+	echo 3 sub.xeton.dev （SUB作者提供）
+	echo 4 v.id9.cc （品云提供,支持vless）
+	echo 5 sub.maoxiongnet.com （猫熊提供）
 	echo -----------------------------------------------
 	echo 0 返回上级菜单
 	read -p "请输入对应数字 > " num
-	if [ -z "$num" ] || [ "$num" -gt 5 ];then
+	if [ -z "$num" ] || [ "$num" -gt 5 ]; then
 		errornum
-	elif [ "$num" = 0 ];then
+	elif [ "$num" = 0 ]; then
 		echo
-	elif [ "$num" -le 5 ];then
+	elif [ "$num" -le 5 ]; then
 		#将对应标记值写入mark
 		server_link=$num
 		setconfig server_link $server_link
-		echo -----------------------------------------------	  
+		echo -----------------------------------------------
 		echo -e "\033[32m设置成功！返回上级菜单\033[0m"
 	fi
 }
-linkfilter(){
+linkfilter() {
 	[ -z "$exclude" ] && exclude="未设置"
 	echo -----------------------------------------------
 	echo -e "\033[33m当前过滤关键字：\033[47;30m$exclude\033[0m"
@@ -80,7 +80,7 @@ linkfilter(){
 	fi
 	setconfig exclude \'$exclude\'
 }
-linkfilter2(){
+linkfilter2() {
 	[ -z "$include" ] && include="未设置"
 	echo -----------------------------------------------
 	echo -e "\033[33m当前筛选关键字：\033[47;30m$include\033[0m"
@@ -100,24 +100,23 @@ linkfilter2(){
 	fi
 	setconfig include \'$include\'
 }
-getyaml(){
+getyaml() {
 	$clashdir/start.sh getyaml
-	if [ "$?" = 0 ];then
-		if [ "$inuserguide" != 1 ];then
-			read -p "是否启动clash服务以使配置文件生效？(1/0) > " res 
+	if [ "$?" = 0 ]; then
+		if [ "$inuserguide" != 1 ]; then
+			read -p "是否启动clash服务以使配置文件生效？(1/0) > " res
 			[ "$res" = 1 ] && clashstart || clashsh
-			exit;
+			exit
 		fi
 	fi
 }
-getlink(){
+getlink() {
 	echo -----------------------------------------------
 	echo -e "\033[30;47m 欢迎使用在线生成配置文件功能！\033[0m"
 	echo -----------------------------------------------
 	#设置输入循环
 	i=1
-	while [ $i -le 99 ]
-	do
+	while [ $i -le 99 ]; do
 		echo -----------------------------------------------
 		echo -e "\033[33m本功能依赖第三方在线subconverter服务实现，脚本本身不提供任何代理服务！\033[0m"
 		echo -e "\033[31m严禁使用本脚本从事任何非法活动，否则一切后果请自负！\033[0m"
@@ -132,23 +131,23 @@ getlink(){
 		echo -e " 0 \033[31m撤销输入并返回上级菜单\033[0m"
 		echo -----------------------------------------------
 		read -p "请直接输入第${i}个链接或对应数字选项 > " link
-		link=$(echo $link | sed 's/\&/%26/g')   #处理分隔符
+		link=$(echo $link | sed 's/\&/%26/g') #处理分隔符
 		test=$(echo $link | grep "://")
-		link=`echo ${link/\#*/''}`   #删除链接附带的注释内容
-		link=`echo ${link/\ \(*\)/''}`   #删除恶心的超链接内容
-		link=`echo ${link/*\&url\=/""}`   #将clash完整链接还原成单一链接
-		link=`echo ${link/\&config\=*/""}`   #将clash完整链接还原成单一链接
-		
-		if [ -n "$test" ];then
-			if [ -z "$Url_link" ];then
+		link=$(echo ${link/\#*/''})         #删除链接附带的注释内容
+		link=$(echo ${link/\ \(*\)/''})     #删除恶心的超链接内容
+		link=$(echo ${link/*\&url\=/""})    #将clash完整链接还原成单一链接
+		link=$(echo ${link/\&config\=*/""}) #将clash完整链接还原成单一链接
+
+		if [ -n "$test" ]; then
+			if [ -z "$Url_link" ]; then
 				Url_link="$link"
 			else
 				Url_link="$Url_link"\|"$link"
 			fi
-			i=$((i+1))
-				
+			i=$((i + 1))
+
 		elif [ "$link" = '1' ]; then
-			if [ -n "$Url_link" ];then
+			if [ -n "$Url_link" ]; then
 				i=100
 				#将用户链接写入mark
 				setconfig Https
@@ -160,31 +159,31 @@ getlink(){
 				echo -e "\033[31m请先输入订阅或分享链接！\033[0m"
 				sleep 1
 			fi
-			
+
 		elif [ "$link" = '2' ]; then
 			linkfilter
-			
+
 		elif [ "$link" = '3' ]; then
 			linkfilter2
-			
+
 		elif [ "$link" = '4' ]; then
 			linkconfig
-			
+
 		elif [ "$link" = '5' ]; then
 			linkserver
-			
-		elif [ "$link" = 0 ];then
+
+		elif [ "$link" = 0 ]; then
 			Url_link=""
 			i=100
-			
+
 		else
 			echo -----------------------------------------------
 			echo -e "\033[31m请输入正确的链接或者数字！\033[0m"
 			sleep 1
 		fi
 	done
-} 
-getlink2(){
+}
+getlink2() {
 	echo -----------------------------------------------
 	echo -e "\033[32m仅限导入完整clash配置文件链接！！！\033[0m"
 	echo -----------------------------------------------
@@ -196,25 +195,25 @@ getlink2(){
 	echo -e "\033[33m0 返回上级菜单\033[0m"
 	echo -----------------------------------------------
 	read -p "请输入完整链接 > " link
-	test=$(echo $link | grep -iE "tp.*://" )
-	link=`echo ${link/\ \(*\)/''}`   #删除恶心的超链接内容
-	link=`echo ${link//\&/\\\&}`   #处理分隔符
-	if [ -n "$link" -a -n "$test" ];then
+	test=$(echo $link | grep -iE "tp.*://")
+	link=$(echo ${link/\ \(*\)/''}) #删除恶心的超链接内容
+	link=$(echo ${link//\&/\\&})    #处理分隔符
+	if [ -n "$link" -a -n "$test" ]; then
 		echo -----------------------------------------------
 		echo -e 请检查输入的链接是否正确：
 		echo -e "\033[4;32m$link\033[0m"
 		read -p "确认导入配置文件？原配置文件将被更名为config.yaml.bak![1/0] > " res
-			if [ "$res" = '1' ]; then
-				#将用户链接写入mark
-				sed -i '/Url=*/'d $CFG_PATH
-				setconfig Https \'$link\'
-				setconfig Url
-				#获取在线yaml文件
-				getyaml
-			else
-				getlink2
-			fi
-	elif [ "$link" = 0 ];then
+		if [ "$res" = '1' ]; then
+			#将用户链接写入mark
+			sed -i '/Url=*/'d $CFG_PATH
+			setconfig Https \'$link\'
+			setconfig Url
+			#获取在线yaml文件
+			getyaml
+		else
+			getlink2
+		fi
+	elif [ "$link" = 0 ]; then
 		i=
 	else
 		echo -----------------------------------------------
@@ -224,75 +223,75 @@ getlink2(){
 		getlink2
 	fi
 }
-setrules(){
-	set_rule_type(){
-		echo -----------------------------------------------	
+setrules() {
+	set_rule_type() {
+		echo -----------------------------------------------
 		echo -e "\033[33m请选择规则类型\033[0m"
 		echo $rule_type | awk -F ' ' '{for(i=1;i<=NF;i++){print i" "$i}}'
 		echo -e " 0 返回上级菜单"
-		read -p "请输入对应数字 > " num	
+		read -p "请输入对应数字 > " num
 		case $num in
 		0) ;;
-		[0-9]*) 
-			if [ $num -gt $(echo $rule_type | awk -F " " '{print NF}') ];then
+		[0-9]*)
+			if [ $num -gt $(echo $rule_type | awk -F " " '{print NF}') ]; then
 				errornum
 			else
-				rule_type_set=$(echo $rule_type|cut -d' ' -f$num)
-				echo -----------------------------------------------	
+				rule_type_set=$(echo $rule_type | cut -d' ' -f$num)
+				echo -----------------------------------------------
 				echo -e "\033[33m请输入规则语句，可以是域名、泛域名、IP网段或者其他匹配规则类型的内容\033[0m"
 				read -p "请输入对应规则 > " rule_state_set
 				[ -n "$rule_state_set" ] && set_group_type || errornum
 			fi
-		;;
+			;;
 		*)
 			errornum
-		;;
+			;;
 		esac
 	}
-	set_group_type(){
-		echo -----------------------------------------------	
+	set_group_type() {
+		echo -----------------------------------------------
 		echo -e "\033[36m请选择具体规则\033[0m"
 		echo -e "\033[33m此处规则读取自现有配置文件，如果你后续更换配置文件时运行出错，请尝试重新添加\033[0m"
 		echo $rule_group | awk -F '#' '{for(i=1;i<=NF;i++){print i" "$i}}'
 		echo -e " 0 返回上级菜单"
-		read -p "请输入对应数字 > " num	
+		read -p "请输入对应数字 > " num
 		case $num in
 		0) ;;
-		[0-9]*) 
-			if [ $num -gt $(echo $rule_group | awk -F "#" '{print NF}') ];then
+		[0-9]*)
+			if [ $num -gt $(echo $rule_group | awk -F "#" '{print NF}') ]; then
 				errornum
 			else
-				rule_group_set=$(echo $rule_group|cut -d'#' -f$num)
+				rule_group_set=$(echo $rule_group | cut -d'#' -f$num)
 				rule_all="- ${rule_type_set},${rule_state_set},${rule_group_set}"
-				[ -n "$(echo IP-CIDR SRC-IP-CIDR IP-CIDR6|grep "$rule_type_set")" ] && rule_all="${rule_all},no-resolve"
-				echo $rule_all >> $clashdir/rules.yaml
-				echo -----------------------------------------------	
+				[ -n "$(echo IP-CIDR SRC-IP-CIDR IP-CIDR6 | grep "$rule_type_set")" ] && rule_all="${rule_all},no-resolve"
+				echo $rule_all >>$clashdir/rules.yaml
+				echo -----------------------------------------------
 				echo -e "\033[32m添加成功！\033[0m"
 			fi
-		;;
+			;;
 		*)
 			errornum
-		;;
+			;;
 		esac
 	}
-	del_rule_type(){
+	del_rule_type() {
 		echo -----------------------------------------------
 		echo -e "输入对应数字即可移除相应规则:"
 		cat $clashdir/rules.yaml | grep -Ev '^#' | awk -F "#" '{print " "NR" "$1$2$3}'
-		echo -----------------------------------------------	
+		echo -----------------------------------------------
 		echo -e " 0 返回上级菜单"
 		read -p "请输入对应数字 > " num
 		case $num in
-		0)	;;
-		'')	;;
+		0) ;;
+		'') ;;
 		*)
-			if [ $num -le $(cat $clashdir/rules.yaml | grep -Ev '^#' | wc -l) ];then
+			if [ $num -le $(cat $clashdir/rules.yaml | grep -Ev '^#' | wc -l) ]; then
 				sed -i "$num{/^\s*[^#]/d}" $clashdir/rules.yaml
 				del_rule_type
 			else
 				errornum
 			fi
-		;;
+			;;
 		esac
 	}
 	echo -----------------------------------------------
@@ -311,19 +310,19 @@ setrules(){
 		rule_group="DIRECT#REJECT$(cat $clashdir/proxy-groups.yaml $clashdir/config.yaml | grep -Ev '^#' | grep -o '\- name:.*' | sed 's/- name: /#/g' | tr -d '\n')"
 		set_rule_type
 		setrules
-	;;
+		;;
 	2)
 		del_rule_type
 		setrules
-	;;
+		;;
 	3)
 		read -p "确认清空全部自定义规则？(1/0) > " res
 		[ "$res" = "1" ] && sed -i '/^\s*[^#]/d' $clashdir/rules.yaml
 		setrules
-	;;
+		;;
 	4)
 		echo -----------------------------------------------
-		if [ "$proxies_bypass" = "未启用" ];then
+		if [ "$proxies_bypass" = "未启用" ]; then
 			echo -e "\033[33m本功能会自动将当前配置文件中的节点域名或IP设置为直连规则以防止出现双重流量！\033[0m"
 			echo -e "\033[33m请确保下游设备使用的节点与ShellClash中使用的节点相同，否则无法生效！\033[0m"
 			read -p "启用节点绕过？(1/0) > " res
@@ -332,27 +331,27 @@ setrules(){
 			proxies_bypass=未启用
 		fi
 		setconfig proxies_bypass $proxies_bypass
-		sleep 1		
+		sleep 1
 		setrules
-	;;
+		;;
 	*)
 		errornum
-	;;
+		;;
 	esac
 }
-setgroups(){
-	set_group_type(){
-		echo -----------------------------------------------	
+setgroups() {
+	set_group_type() {
+		echo -----------------------------------------------
 		echo -e "\033[33m注意策略组名称必须和【自定义规则】或【自定义节点】功能中指定的策略组一致！\033[0m"
 		echo -e "\033[33m建议先创建策略组，之后可在【自定义规则】或【自定义节点】功能中自动指定\033[0m"
 		echo -e "\033[33m如需在当前策略组下添加节点，请手动编辑$clashdir/proxy-groups.yaml\033[0m"
 		read -p "请输入自定义策略组名称 > " new_group_name
-		echo -----------------------------------------------	
+		echo -----------------------------------------------
 		echo -e "\033[32m请选择策略组【$new_group_name】的类型！\033[0m"
 		echo $group_type_cn | awk '{for(i=1;i<=NF;i++){print i" "$i}}'
 		read -p "请输入对应数字 > " num
 		new_group_type=$(echo $group_type | awk '{print $'"$num"'}')
-		if [ "$num" = "1" ];then
+		if [ "$num" = "1" ]; then
 			unset new_group_url interval
 		else
 			read -p "请输入测速地址，回车则默认使用https://www.gstatic.com/generate_204 > " new_group_url
@@ -362,7 +361,7 @@ setgroups(){
 		fi
 		set_group_add
 		#添加自定义策略组
-		cat >> $clashdir/proxy-groups.yaml <<EOF
+		cat >>$clashdir/proxy-groups.yaml <<EOF
   - name: $new_group_name
     type: $new_group_type
     $new_group_url
@@ -370,31 +369,31 @@ setgroups(){
     proxies:
      - DIRECT
 EOF
-		echo -----------------------------------------------	
+		echo -----------------------------------------------
 		echo -e "\033[32m添加成功！\033[0m"
-		
+
 	}
-	set_group_add(){
-		echo -----------------------------------------------	
+	set_group_add() {
+		echo -----------------------------------------------
 		echo -e "\033[36m请选择想要将本策略添加到的策略组\033[0m"
 		echo -e "\033[32m如需添加到多个策略组，请一次性输入多个数字并用空格隔开\033[0m"
 		echo $proxy_group | awk -F '#' '{for(i=1;i<=NF;i++){print i" "$i}}'
 		echo -e " 0 跳过添加"
-		read -p "请输入对应数字(多个用空格隔开) > " char	
+		read -p "请输入对应数字(多个用空格隔开) > " char
 		case $char in
 		0) ;;
-		*) 
-			for num in $char;do
-				rule_group_set=$(echo $proxy_group|cut -d'#' -f$num)
+		*)
+			for num in $char; do
+				rule_group_set=$(echo $proxy_group | cut -d'#' -f$num)
 				rule_group_add="${rule_group_add}#${rule_group_set}"
 			done
-			if [ -n "$rule_group_add" ];then
-				new_group_name="$new_group_name$rule_group_add" 
+			if [ -n "$rule_group_add" ]; then
+				new_group_name="$new_group_name$rule_group_add"
 				unset rule_group_add
 			else
 				errornum
 			fi
-		;;
+			;;
 		esac
 	}
 	echo -----------------------------------------------
@@ -412,50 +411,50 @@ EOF
 		proxy_group="$(cat $clashdir/proxy-groups.yaml $clashdir/config.yaml | grep -Ev '^#' | grep -o '\- name:.*' | sed 's/- name: /#/g' | tr -d '\n' | sed 's/#//')"
 		set_group_type
 		setgroups
-	;;
+		;;
 	2)
 		read -p "确认清空全部自定义策略组？(1/0) > " res
 		[ "$res" = "1" ] && sed -i '/^\s*[^#]/d' $clashdir/proxy-groups.yaml
 		setgroups
-	;;
+		;;
 	*)
 		errornum
-	;;
+		;;
 	esac
 }
-setproxies(){
-	set_proxy_type(){
-		echo -----------------------------------------------	
+setproxies() {
+	set_proxy_type() {
+		echo -----------------------------------------------
 		echo -e "\033[33m注意节点格式必须是单行,不包括括号,name:必须写在最前,例如：\033[0m"
 		echo -e "\033[36m【name: \"test\", server: 192.168.1.1, port: 12345, type: socks5, udp: true】\033[0m"
-		echo -e "更多写法请参考：\033[32m https://22cs.github.io/ \033[0m"
+		echo -e "更多写法请参考：\033[32m https://juewuy.github.io/ \033[0m"
 		read -p "请输入节点 > " proxy_state_set
 		[ -n "$(echo $proxy_state_set | grep -E "^name:")" ] && set_group_add || errornum
 	}
-	set_group_add(){
-		echo -----------------------------------------------	
+	set_group_add() {
+		echo -----------------------------------------------
 		echo -e "\033[36m请选择想要将节点添加到的策略组\033[0m"
 		echo -e "\033[32m如需添加到多个策略组，请一次性输入多个数字并用空格隔开\033[0m"
 		echo -e "\033[33m如需自定义策略组，请先使用【管理自定义策略组功能】添加\033[0m"
 		echo $proxy_group | awk -F '#' '{for(i=1;i<=NF;i++){print i" "$i}}'
 		echo -e " 0 返回上级菜单"
-		read -p "请输入对应数字(多个用空格隔开) > " char	
+		read -p "请输入对应数字(多个用空格隔开) > " char
 		case $char in
 		0) ;;
-		*) 
-			for num in $char;do
-				rule_group_set=$(echo $proxy_group|cut -d'#' -f$num)
+		*)
+			for num in $char; do
+				rule_group_set=$(echo $proxy_group | cut -d'#' -f$num)
 				rule_group_add="${rule_group_add}#${rule_group_set}"
 			done
-			if [ -n "$rule_group_add" ];then
-				echo "- {$proxy_state_set}$rule_group_add" >> $clashdir/proxies.yaml
-				echo -----------------------------------------------	
+			if [ -n "$rule_group_add" ]; then
+				echo "- {$proxy_state_set}$rule_group_add" >>$clashdir/proxies.yaml
+				echo -----------------------------------------------
 				echo -e "\033[32m添加成功！\033[0m"
 				unset rule_group_add
 			else
 				errornum
 			fi
-		;;
+			;;
 		esac
 	}
 	echo -----------------------------------------------
@@ -474,28 +473,28 @@ setproxies(){
 		proxy_group="$(cat $clashdir/proxy-groups.yaml $clashdir/config.yaml | grep -Ev '^#' | grep -o '\- name:.*' | sed 's/- name: /#/g' | tr -d '\n' | sed 's/#//')"
 		set_proxy_type
 		setproxies
-	;;
+		;;
 	2)
 		echo -e "当前已添加的自定义节点为:"
 		cat $clashdir/proxies.yaml | grep -Ev '^#' | awk -F '[,,}]' '{print NR, $1, $NF}' | sed 's/- {//g'
-		echo -----------------------------------------------	
+		echo -----------------------------------------------
 		echo -e "\033[33m输入节点对应数字可以移除对应节点\033[0m"
 		read -p "请输入对应数字 > " num
-		if [ $num -le $(cat $clashdir/proxies.yaml | grep -Ev '^#' | wc -l) ];then
+		if [ $num -le $(cat $clashdir/proxies.yaml | grep -Ev '^#' | wc -l) ]; then
 			sed -i "$num{/^\s*[^#]/d}" $clashdir/proxies.yaml
 		else
 			errornum
 		fi
 		setproxies
-	;;
+		;;
 	3)
 		read -p "确认清空全部自定义节点？(1/0) > " res
 		[ "$res" = "1" ] && sed -i '/^\s*[^#]/d' $clashdir/proxies.yaml
 		setproxies
-	;;
+		;;
 	4)
 		echo -----------------------------------------------
-		if [ "$proxies_bypass" = "未启用" ];then
+		if [ "$proxies_bypass" = "未启用" ]; then
 			echo -e "\033[33m本功能会自动将当前配置文件中的节点域名或IP设置为直连规则以防止出现双重流量！\033[0m"
 			echo -e "\033[33m请确保下游设备使用的节点与ShellClash中使用的节点相同，否则无法生效！\033[0m"
 			read -p "启用节点绕过？(1/0) > " res
@@ -504,16 +503,16 @@ setproxies(){
 			proxies_bypass=未启用
 		fi
 		setconfig proxies_bypass $proxies_bypass
-		sleep 1		
+		sleep 1
 		setrules
-	;;
+		;;
 	*)
 		errornum
-	;;
+		;;
 	esac
 }
 
-override(){
+override() {
 	[ -z "$rule_link" ] && rule_link=1
 	[ -z "$server_link" ] && server_link=1
 	echo -----------------------------------------------
@@ -532,11 +531,11 @@ override(){
 	case "$num" in
 	1)
 		source $CFG_PATH
-		if [ -n "$(pidof clash)" ];then
+		if [ -n "$(pidof clash)" ]; then
 			echo -----------------------------------------------
 			echo -e "\033[33m检测到clash服务正在运行，需要先停止clash服务！\033[0m"
 			read -p "是否停止clash服务？(1/0) > " res
-			if [ "$res" = "1" ];then
+			if [ "$res" = "1" ]; then
 				$clashdir/start.sh stop
 				setport
 			fi
@@ -544,29 +543,29 @@ override(){
 			setport
 		fi
 		override
-	;;
+		;;
 	2)
 		setdns
-		override	
-	;;
+		override
+		;;
 	3)
 		setrules
 		override
-	;;
+		;;
 	4)
 		setproxies
 		override
-	;;
+		;;
 	5)
 		setgroups
 		override
-	;;
+		;;
 	6)
-		[ ! -f $clashdir/user.yaml ] && cat > $clashdir/user.yaml <<EOF
+		[ ! -f $clashdir/user.yaml ] && cat >$clashdir/user.yaml <<EOF
 #用于编写自定义设定(可参考https://lancellc.gitbook.io/clash)
 #port: 7890
 EOF
-		[ ! -f $clashdir/others.yaml ] && cat > $clashdir/others.yaml <<EOF
+		[ ! -f $clashdir/others.yaml ] && cat >$clashdir/others.yaml <<EOF
 #用于编写自定义的锚点、入站、proxy-providers、sub-rules、rule-set、script等功能
 #可参考 https://github.com/MetaCubeX/Clash.Meta/blob/Meta/docs/config.yaml 或 https://lancellc.gitbook.io/clash/clash-config-file/an-example-configuration-file
 #此处内容会被添加在配置文件的“proxy-group：”模块的末尾与“rules：”模块之前的位置
@@ -580,13 +579,13 @@ EOF
 EOF
 		echo -e "\033[32m已经创建自定义设定文件：$clashdir/user.yaml ！\033[0m"
 		echo -e "\033[32m已经创建自定义功能文件：$clashdir/others.yaml ！\033[0m"
-		echo -e "\033[33m可用于编写自定义的锚点、入站、proxy-providers、sub-rules、rule-set、script等功能\033[0m"		
+		echo -e "\033[33m可用于编写自定义的锚点、入站、proxy-providers、sub-rules、rule-set、script等功能\033[0m"
 		echo -e "Windows下请\n使用\033[33mWinSCP软件\033[0m进行编辑！\033[0m"
 		echo -e "MacOS下请\n使用\033[33mSecureFX软件\033[0m进行编辑！\033[0m"
 		echo -e "Linux本机请\n使用\033[33mVim\033[0m进行编辑(不支持路由设备)！\033[0m"
 		sleep 3
 		override
-	;;
+		;;
 	9)
 		echo -----------------------------------------------
 		echo -e "\033[33m此功能可能会导致严重问题！启用后脚本中大部分功能都将禁用！！！\033[0m"
@@ -598,17 +597,17 @@ EOF
 		[ "$res" = '1' ] && {
 			disoverride=1
 			setconfig disoverride $disoverride
-			echo -----------------------------------------------	  
+			echo -----------------------------------------------
 			echo -e "\033[32m设置成功！\033[0m"
 		}
 		override
-	;;
+		;;
 	*)
 		errornum
-	;;
+		;;
 	esac
 }
-clashlink(){
+clashlink() {
 	[ -z "$rule_link" ] && rule_link=1
 	[ -z "$server_link" ] && server_link=1
 	echo -----------------------------------------------
@@ -625,7 +624,7 @@ clashlink(){
 	read -p "请输入对应数字 > " num
 	case "$num" in
 	1)
-		if [ -n "$Url" ];then
+		if [ -n "$Url" ]; then
 			echo -----------------------------------------------
 			echo -e "\033[33m检测到已记录的链接内容：\033[0m"
 			echo -e "\033[4;32m$Url\033[0m"
@@ -640,7 +639,7 @@ clashlink(){
 			fi
 		fi
 		getlink
-	;;
+		;;
 	2)
 		echo -----------------------------------------------
 		echo -e "\033[33m此功能可能会导致严重bug！！！\033[0m"
@@ -657,31 +656,31 @@ clashlink(){
 			sleep 1
 			getlink
 		fi
-	;;
+		;;
 	3)
 		yamlbak=$yaml.bak
-		if [ ! -f "$yaml".bak ];then
+		if [ ! -f "$yaml".bak ]; then
 			echo -----------------------------------------------
 			echo -e "\033[31m没有找到配置文件的备份！\033[0m"
 			clashlink
 		else
 			echo -----------------------------------------------
-			echo -e 备份文件共有"\033[32m`wc -l < $yamlbak`\033[0m"行内容，当前文件共有"\033[32m`wc -l < $yaml`\033[0m"行内容
+			echo -e 备份文件共有"\033[32m$(wc -l <$yamlbak)\033[0m"行内容，当前文件共有"\033[32m$(wc -l <$yaml)\033[0m"行内容
 			read -p "确认还原配置文件？此操作不可逆！[1/0] > " res
 			if [ "$res" = '1' ]; then
 				mv $yamlbak $yaml
 				echo -----------------------------------------------
 				echo -e "\033[32m配置文件已还原！请手动重启clash服务！\033[0m"
 				sleep 1
-			else 
+			else
 				echo -----------------------------------------------
 				echo -e "\033[31m操作已取消！返回上级菜单！\033[0m"
 				clashlink
 			fi
 		fi
-	;;
+		;;
 	4)
-		if [ -z "$Url" -a -z "$Https" ];then
+		if [ -z "$Url" -a -z "$Https" ]; then
 			echo -----------------------------------------------
 			echo -e "\033[31m没有找到你的配置文件/订阅链接！请先输入链接！\033[0m"
 			sleep 1
@@ -698,21 +697,22 @@ clashlink(){
 				clashlink
 			fi
 		fi
-	;;
+		;;
 	5)
 		clashcron
-	;;
+		;;
 	6)
 		override
-	;;
+		;;
 	*)
 		errornum
+		;;
 	esac
 }
 #下载更新相关
-gettar(){
+gettar() {
 	$clashdir/start.sh webget $tmpdir/clashfm.tar.gz $tarurl
-	if [ "$?" != "0" ];then
+	if [ "$?" != "0" ]; then
 		echo -e "\033[33m文件下载失败！\033[0m"
 		error_down
 	else
@@ -720,20 +720,20 @@ gettar(){
 		#解压
 		echo -----------------------------------------------
 		echo 开始解压文件！
-		mkdir -p $clashdir > /dev/null
+		mkdir -p $clashdir >/dev/null
 		tar -zxvf "$tmpdir/clashfm.tar.gz" -C $clashdir/
-		if [ $? -ne 0 ];then
+		if [ $? -ne 0 ]; then
 			rm -rf $tmpdir/clashfm.tar.gz
 			echo -e "\033[33m文件解压失败！\033[0m"
 			error_down
 		else
 			source $clashdir/init.sh >/dev/null
 			echo -e "\033[32m脚本更新成功！\033[0m"
-		fi		
+		fi
 	fi
 	exit
 }
-getsh(){
+getsh() {
 	echo -----------------------------------------------
 	echo -e "当前脚本版本为：\033[33m $versionsh_l \033[0m"
 	echo -e "最新脚本版本为：\033[32m $release_new \033[0m"
@@ -748,34 +748,34 @@ getsh(){
 		echo -----------------------------------------------
 		echo -e "\033[32m管理脚本更新成功!\033[0m"
 		echo -----------------------------------------------
-		exit;
+		exit
 	fi
 }
 
-getcpucore(){
+getcpucore() {
 	cputype=$(uname -ms | tr ' ' '_' | tr '[A-Z]' '[a-z]')
 	[ -n "$(echo $cputype | grep -E "linux.*armv.*")" ] && cpucore="armv5"
 	[ -n "$(echo $cputype | grep -E "linux.*armv7.*")" ] && [ -n "$(cat /proc/cpuinfo | grep vfp)" ] && [ ! -d /jffs/clash ] && cpucore="armv7"
 	[ -n "$(echo $cputype | grep -E "linux.*aarch64.*|linux.*armv8.*")" ] && cpucore="armv8"
 	[ -n "$(echo $cputype | grep -E "linux.*86.*")" ] && cpucore="386"
 	[ -n "$(echo $cputype | grep -E "linux.*86_64.*")" ] && cpucore="amd64"
-	if [ -n "$(echo $cputype | grep -E "linux.*mips.*")" ];then
+	if [ -n "$(echo $cputype | grep -E "linux.*mips.*")" ]; then
 		mipstype=$(echo -n I | hexdump -o 2>/dev/null | awk '{ print substr($2,6,1); exit}') #通过判断大小端判断mips或mipsle
 		[ "$mipstype" = "0" ] && cpucore="mips-softfloat" || cpucore="mipsle-softfloat"
 	fi
 	[ -n "$cpucore" ] && setconfig cpucore $cpucore
 }
-setcpucore(){
+setcpucore() {
 	cpucore_list="armv5 armv7 armv8 386 amd64 mipsle-softfloat mipsle-hardfloat mips-softfloat"
 	echo -----------------------------------------------
 	echo -e "\033[31m仅适合脚本无法正确识别核心或核心无法正常运行时使用！\033[0m"
 	echo -e "当前可供在线下载的处理器架构为："
 	echo $cpucore_list | awk -F " " '{for(i=1;i<=NF;i++) {print i" "$i }}'
-	echo -e "不知道如何获取核心版本？请参考：\033[36;4mhttps://22cs.github.io/bdaz\033[0m"
+	echo -e "不知道如何获取核心版本？请参考：\033[36;4mhttps://juewuy.github.io/bdaz\033[0m"
 	echo -----------------------------------------------
 	read -p "请输入对应数字 > " num
-	setcpucore=$(echo $cpucore_list | awk '{print $"'"$num"'"}' )
-	if [ -z "$setcpucore" ];then
+	setcpucore=$(echo $cpucore_list | awk '{print $"'"$num"'"}')
+	if [ -z "$setcpucore" ]; then
 		echo -e "\033[31m请输入正确的处理器架构！\033[0m"
 		sleep 1
 		cpucore=""
@@ -784,7 +784,7 @@ setcpucore(){
 		setconfig cpucore $cpucore
 	fi
 }
-getcore(){
+getcore() {
 	[ -z "$clashcore" ] && clashcore=clashpre
 	[ -z "$cpucore" ] && getcpucore
 	#生成链接
@@ -793,27 +793,27 @@ getcore(){
 	echo -----------------------------------------------
 	echo 正在在线获取clash核心文件……
 	$clashdir/start.sh webget $tmpdir/clash.new $corelink
-	if [ "$?" = "1" ];then
+	if [ "$?" = "1" ]; then
 		echo -e "\033[31m核心文件下载失败！\033[0m"
 		rm -rf $tmpdir/clash.new
 		[ -z "$custcorelink" ] && error_down
 	else
-		chmod +x $tmpdir/clash.new 
+		chmod +x $tmpdir/clash.new
 		clashv=$($tmpdir/clash.new -v 2>/dev/null | sed 's/ linux.*//;s/.* //')
-		if [ -z "$clashv" ];then
+		if [ -z "$clashv" ]; then
 			echo -e "\033[31m核心文件下载成功但校验失败！请尝试手动指定CPU版本\033[0m"
 			rm -rf $tmpdir/clash.new
 			setcpucore
 		else
 			echo -e "\033[32m$clashcore核心下载成功！\033[0m"
 			mv -f $tmpdir/clash.new $bindir/clash
-			chmod +x $bindir/clash 
+			chmod +x $bindir/clash
 			setconfig clashcore $clashcore
 			setconfig clashv $version
 		fi
 	fi
 }
-setcustcore(){
+setcustcore() {
 	[ -z "$cpucore" ] && getcpucore
 	echo -----------------------------------------------
 	echo -e "\033[36m自定义内核均未经过适配，可能存在部分功能不兼容的问题！\033[0m"
@@ -825,34 +825,22 @@ setcustcore(){
 	read -p "我确认遇到问题可以自行解决[1/0] > " res
 	[ "$res" = '1' ] && {
 		echo -e "\033[33m请选择需要使用的核心！\033[0m"
-		echo -e "1 \033[32m 测试版ClashPre内核 \033[0m(不兼容redir-host)"
-		echo -e "2 \033[32m 最新Meta.Alpha内核  \033[0m"
 		echo -e "3 \033[33m 自定义内核链接 \033[0m"
-		read -p "请输入对应数字 > " num	
+		read -p "请输入对应数字 > " num
 		case "$num" in
-		1)
-			clashcore=clashpre
-			custcorelink=https://github.com/22cs/ShellClash/releases/download/clash.premium.latest/clash-linux-$cpucore
-			getcore			
-		;;
-		2)
-			clashcore=clash.meta
-			custcorelink=https://github.com/22cs/ShellClash/releases/download/clash.meta.alpha/clash-linux-$cpucore
-			getcore			
-		;;
 		3)
 			read -p "请输入自定义内核的链接地址(必须是二进制文件) > " link
 			[ -n "$link" ] && custcorelink="$link"
 			clashcore=clash.meta
 			getcore
-		;;
+			;;
 		*)
 			errornum
-		;;
+			;;
 		esac
 	}
 }
-setcore(){
+setcore() {
 	#获取核心及版本信息
 	[ ! -f $clashdir/clash ] && clashcore="未安装核心"
 	###
@@ -878,42 +866,42 @@ setcore(){
 	echo
 	echo "5 手动指定处理器架构"
 	echo -----------------------------------------------
-	echo 0 返回上级菜单 
+	echo 0 返回上级菜单
 	read -p "请输入对应数字 > " num
 	case "$num" in
 	1)
 		clashcore=clash
 		custcorelink=''
 		getcore
-	;;
+		;;
 	2)
 		clashcore=clashpre
 		custcorelink=''
 		getcore
-	;;
+		;;
 	3)
 		clashcore=clash.meta
 		custcorelink=''
 		getcore
-	;;
+		;;
 	4)
 		setcustcore
-	;;
+		;;
 	5)
 		setcpucore
 		setcore
-	;;
+		;;
 	*)
 		errornum
-	;;
+		;;
 	esac
 }
 
-getgeo(){
+getgeo() {
 	echo -----------------------------------------------
 	echo 正在从服务器获取数据库文件…………
 	$clashdir/start.sh webget $tmpdir/$geoname $update_url/bin/geodata/$geotype
-	if [ "$?" = "1" ];then
+	if [ "$?" = "1" ]; then
 		echo -----------------------------------------------
 		echo -e "\033[31m文件下载失败！\033[0m"
 		error_down
@@ -923,13 +911,13 @@ getgeo(){
 		echo -e "\033[32mGeoIP/CN_IP数据库文件下载成功！\033[0m"
 		Geo_v=$GeoIP_v
 		setconfig Geo_v $GeoIP_v
-		if [ "$geoname" = "Country.mmdb" ];then
+		if [ "$geoname" = "Country.mmdb" ]; then
 			geotype=$geotype
 			setconfig geotype $geotype
 		fi
 	fi
 }
-setgeo(){
+setgeo() {
 	echo -----------------------------------------------
 	[ "$geotype" = "cn_mini.mmdb" ] && echo -e "当前使用的是\033[47;30m精简版数据库\033[0m" || echo -e "当前使用的是\033[47;30m全球版数据库\033[0m"
 	echo -e "\033[36m请选择需要更新/切换的GeoIP/CN_IP数据库：\033[0m"
@@ -938,8 +926,8 @@ setgeo(){
 	echo -e " 2 由\033[32mHackl0us\033[0m提供的精简版CN-IP数据库(约0.2mb)"
 	echo -e " 3 由\033[32m17mon\033[0m提供的CN-IP文件(需启用CN_IP绕过，约0.2mb)"
 	echo -e " 4 由\033[32mChanthMiao\033[0m提供的CN-IPV6文件(需ipv6启用CN_IP绕过，约50kb)"
-	[ "$clashcore" = "clash.meta" ] && \
-	echo -e " 5 由\033[32mLoyalsoldier\033[0m提供的GeoSite数据库(限Meta内核，约4.5mb)"
+	[ "$clashcore" = "clash.meta" ] &&
+		echo -e " 5 由\033[32mLoyalsoldier\033[0m提供的GeoSite数据库(限Meta内核，约4.5mb)"
 	echo " 0 返回上级菜单"
 	echo -----------------------------------------------
 	read -p "请输入对应数字 > " num
@@ -958,7 +946,7 @@ setgeo(){
 			getgeo
 		else
 			echo -----------------------------------------------
-			echo -e "\033[31m未开启绕过内核功能，无需更新CN-IP文件！！\033[0m"	
+			echo -e "\033[31m未开启绕过内核功能，无需更新CN-IP文件！！\033[0m"
 			sleep 1
 		fi
 	elif [ "$num" = '4' ]; then
@@ -968,7 +956,7 @@ setgeo(){
 			getgeo
 		else
 			echo -----------------------------------------------
-			echo -e "\033[31m未开启ipv6下CN绕过功能，无需更新CN-IPV6文件！！\033[0m"	
+			echo -e "\033[31m未开启ipv6下CN绕过功能，无需更新CN-IPV6文件！！\033[0m"
 			sleep 1
 		fi
 	elif [ "$num" = '5' ]; then
@@ -980,9 +968,9 @@ setgeo(){
 	fi
 }
 
-getdb(){
+getdb() {
 	#下载及安装
-	if [ -f /www/clash/index.html -o -f $clashdir/ui/index.html ];then
+	if [ -f /www/clash/index.html -o -f $clashdir/ui/index.html ]; then
 		echo -----------------------------------------------
 		echo -e "\033[31m检测到您已经安装过本地面板了！\033[0m"
 		echo -----------------------------------------------
@@ -997,7 +985,7 @@ getdb(){
 	echo -----------------------------------------------
 	echo 正在连接服务器获取安装文件…………
 	$clashdir/start.sh webget $tmpdir/clashdb.tar.gz $dblink
-	if [ "$?" = "1" ];then
+	if [ "$?" = "1" ]; then
 		echo -----------------------------------------------
 		echo -e "\033[31m文件下载失败！\033[0m"
 		echo -----------------------------------------------
@@ -1005,14 +993,14 @@ getdb(){
 		setdb
 	else
 		echo -e "\033[33m下载成功，正在解压文件！\033[0m"
-		mkdir -p $dbdir > /dev/null
-		tar -zxvf "$tmpdir/clashdb.tar.gz" -C $dbdir > /dev/null
-		if [ $? -ne 0 ];then
-			tar -zxvf "$tmpdir/clashdb.tar.gz" --no-same-permissions -C $dbdir > /dev/null
-			[ $? -ne 0 ] && echo "文件解压失败！" && rm -rf $tmpdir/clashfm.tar.gz && exit 1 
+		mkdir -p $dbdir >/dev/null
+		tar -zxvf "$tmpdir/clashdb.tar.gz" -C $dbdir >/dev/null
+		if [ $? -ne 0 ]; then
+			tar -zxvf "$tmpdir/clashdb.tar.gz" --no-same-permissions -C $dbdir >/dev/null
+			[ $? -ne 0 ] && echo "文件解压失败！" && rm -rf $tmpdir/clashfm.tar.gz && exit 1
 		fi
 		#修改默认host和端口
-		if [ "$db_type" = "clashdb" -o "$db_type" = "meta_db" ];then
+		if [ "$db_type" = "clashdb" -o "$db_type" = "meta_db" ]; then
 			sed -i "s/127.0.0.1/${host}/g" $dbdir/assets/*.js
 			sed -i "s/9090/${db_port}/g" $dbdir/assets/*.js
 		else
@@ -1027,9 +1015,9 @@ getdb(){
 		sleep 1
 	fi
 }
-setdb(){
-	dbdir(){
-		if [ -w /www -a -n "$(pidof nginx)" ];then
+setdb() {
+	dbdir() {
+		if [ -w /www -a -n "$(pidof nginx)" ]; then
 			echo -----------------------------------------------
 			echo -e "请选择面板\033[33m安装目录：\033[0m"
 			echo -----------------------------------------------
@@ -1049,8 +1037,8 @@ setdb(){
 				setdb
 			fi
 		else
-				dbdir=$clashdir/ui
-				hostdir=":$db_port/ui"
+			dbdir=$clashdir/ui
+			hostdir=":$db_port/ui"
 		fi
 	}
 
@@ -1086,7 +1074,7 @@ setdb(){
 		getdb
 	elif [ "$num" = '5' ]; then
 		read -p "确认卸载本地面板？(1/0) > " res
-		if [ "$res" = 1 ];then
+		if [ "$res" = 1 ]; then
 			rm -rf /www/clash
 			rm -rf $clashdir/ui
 			rm -rf $bindir/ui
@@ -1099,12 +1087,12 @@ setdb(){
 	fi
 }
 
-getcrt(){
+getcrt() {
 	crtlink="${update_url}/bin/fix/ca-certificates.crt"
 	echo -----------------------------------------------
 	echo 正在连接服务器获取安装文件…………
 	$clashdir/start.sh webget $tmpdir/ca-certificates.crt $crtlink
-	if [ "$?" = "1" ];then
+	if [ "$?" = "1" ]; then
 		echo -----------------------------------------------
 		echo -e "\033[31m文件下载失败！\033[0m"
 		error_down
@@ -1112,19 +1100,19 @@ getcrt(){
 		echo -----------------------------------------------
 		mv -f $tmpdir/ca-certificates.crt $crtdir
 		$clashdir/start.sh webget $tmpdir/ssl_test https://baidu.com echooff rediron skipceroff
-		if [ "$?" = "1" ];then
+		if [ "$?" = "1" ]; then
 			export CURL_CA_BUNDLE=$crtdir
-			echo "export CURL_CA_BUNDLE=$crtdir" >> /etc/profile
+			echo "export CURL_CA_BUNDLE=$crtdir" >>/etc/profile
 		fi
 		rm -rf $tmpdir/ssl_test
 		echo -e "\033[32m证书安装成功！\033[0m"
 		sleep 1
 	fi
 }
-setcrt(){
+setcrt() {
 	openssldir=$(openssl version -a 2>&1 | grep OPENSSLDIR | awk -F "\"" '{print $2}')
 	[ -z "$openssldir" ] && openssldir=/etc/ssl
-	if [ -n "$openssldir" ];then
+	if [ -n "$openssldir" ]; then
 		crtdir="$openssldir/certs/ca-certificates.crt"
 		echo -----------------------------------------------
 		echo -e "\033[36m安装/更新本地根证书文件(ca-certificates.crt)\033[0m"
@@ -1134,7 +1122,7 @@ setcrt(){
 		[ -f "$crtdir" ] && echo -e "\033[33m检测到系统已经存在根证书文件($crtdir)了！\033[0m\n-----------------------------------------------"
 		read -p "是否覆盖更新？(1/0) > " res
 
-		if [ -z "$res" ];then
+		if [ -z "$res" ]; then
 			errornum
 		elif [ "$res" = '0' ]; then
 			i=
@@ -1150,8 +1138,8 @@ setcrt(){
 	fi
 }
 #安装源
-setserver(){
-	saveserver(){
+setserver() {
+	saveserver() {
 		#写入mark文件
 		setconfig update_url \'$update_url\'
 		setconfig release_url \'$release_url\'
@@ -1173,7 +1161,7 @@ setserver(){
 	echo -e " 9 \033[31m版本回退\033[0m"
 	echo -e " 0 返回上级菜单"
 	read -p "请输入对应数字 > " num
-	if	[ -z "$num" ]; then 
+	if [ -z "$num" ]; then
 		errornum
 	elif [ "$num" = 1 ]; then
 		release_url='https://fastly.jsdelivr.net/gh/22cs/ShellClash'
@@ -1204,7 +1192,7 @@ setserver(){
 	elif [ "$num" = 8 ]; then
 		echo -----------------------------------------------
 		read -p "请输入个人源路径 > " update_url
-		if [ -z "$update_url" ];then
+		if [ -z "$update_url" ]; then
 			echo -----------------------------------------------
 			echo -e "\033[31m取消输入，返回上级菜单\033[0m"
 		else
@@ -1236,32 +1224,32 @@ setserver(){
 	fi
 }
 #检查更新
-checkupdate(){
-if [ -z "$release_new" ];then
-	if [ -n "$release_url" ];then
-		[ -n "$(echo $release_url|grep 'jsdelivr')" ] && check_url=$release_url@main || check_url=$release_url/main
-		$clashdir/start.sh webget $tmpdir/clashversion $check_url/bin/release_version echoon rediroff 2>$tmpdir/clashversion
-		release_new=$(cat $tmpdir/clashversion | head -1)
-		[ -n "$(echo $release_url|grep 'jsdelivr')" ] && update_url=$release_url@$release_new || update_url=$release_url/$release_new
-		setconfig update_url \'$update_url\'
-		release_type=正式版
-	else
-		release_type=测试版
-	fi	
-	$clashdir/start.sh webget $tmpdir/clashversion $update_url/bin/version echooff 
-	[ "$?" = "0" ] && release_new=$(cat $tmpdir/clashversion | grep -oE 'versionsh=.*' | awk -F'=' '{ print $2 }')
-	if [ -n "$release_new" ];then
-		source $tmpdir/clashversion 2>/dev/null
-	else
-		echo -e "\033[31m检查更新失败！请切换其他安装源！\033[0m"
-		echo -e "\033[36m如全部安装源都无法使用，请先运行clash服务后再使用更新功能！\033[0m"
-		sleep 1
-		setserver
+checkupdate() {
+	if [ -z "$release_new" ]; then
+		if [ -n "$release_url" ]; then
+			[ -n "$(echo $release_url | grep 'jsdelivr')" ] && check_url=$release_url@main || check_url=$release_url/main
+			$clashdir/start.sh webget $tmpdir/clashversion $check_url/bin/release_version echoon rediroff 2>$tmpdir/clashversion
+			release_new=$(cat $tmpdir/clashversion | head -1)
+			[ -n "$(echo $release_url | grep 'jsdelivr')" ] && update_url=$release_url@$release_new || update_url=$release_url/$release_new
+			setconfig update_url \'$update_url\'
+			release_type=正式版
+		else
+			release_type=测试版
+		fi
+		$clashdir/start.sh webget $tmpdir/clashversion $update_url/bin/version echooff
+		[ "$?" = "0" ] && release_new=$(cat $tmpdir/clashversion | grep -oE 'versionsh=.*' | awk -F'=' '{ print $2 }')
+		if [ -n "$release_new" ]; then
+			source $tmpdir/clashversion 2>/dev/null
+		else
+			echo -e "\033[31m检查更新失败！请切换其他安装源！\033[0m"
+			echo -e "\033[36m如全部安装源都无法使用，请先运行clash服务后再使用更新功能！\033[0m"
+			sleep 1
+			setserver
+		fi
+		rm -rf $tmpdir/clashversion
 	fi
-	rm -rf $tmpdir/clashversion
-fi
 }
-update(){
+update() {
 	echo -----------------------------------------------
 	echo -ne "\033[32m正在检查更新！\033[0m\r"
 	checkupdate
@@ -1285,51 +1273,51 @@ update(){
 	echo -e " 9 \033[31m卸载\033[34mShellClash\033[0m"
 	echo -----------------------------------------------
 	echo -e "99 \033[36m鸣谢！\033[0m"
-	echo -e " 0 返回上级菜单" 
+	echo -e " 0 返回上级菜单"
 	echo -----------------------------------------------
 	read -p "请输入对应数字 > " num
 	if [ -z "$num" ]; then
 		errornum
 	elif [ "$num" = 0 ]; then
 		i=
-	elif [ "$num" = 1 ]; then	
-		getsh	
+	elif [ "$num" = 1 ]; then
+		getsh
 
-	elif [ "$num" = 2 ]; then	
+	elif [ "$num" = 2 ]; then
 		setcore
 		update
-		
-	elif [ "$num" = 3 ]; then	
+
+	elif [ "$num" = 3 ]; then
 		setgeo
 		update
-	
-	elif [ "$num" = 4 ]; then	
+
+	elif [ "$num" = 4 ]; then
 		setdb
 		update
-		
-	elif [ "$num" = 5 ]; then	
+
+	elif [ "$num" = 5 ]; then
 		setcrt
-		update	
-		
-	elif [ "$num" = 6 ]; then	
+		update
+
+	elif [ "$num" = 6 ]; then
 		echo -----------------------------------------------
 		echo -e "PAC配置链接为：\033[30;47m http://$host:$db_port/ui/pac \033[0m"
-		echo -e "PAC的使用教程请参考：\033[4;32mhttps://22cs.github.io/ehRUeewcv\033[0m"
+		echo -e "PAC的使用教程请参考：\033[4;32mhttps://juewuy.github.io/ehRUeewcv\033[0m"
 		sleep 2
 		update
-		
-	elif [ "$num" = 7 ]; then	
+
+	elif [ "$num" = 7 ]; then
 		setserver
 		update
 	elif [ "$num" = 8 ]; then
 		source $clashdir/init.sh
-		update		
-		
+		update
+
 	elif [ "$num" = 9 ]; then
 		$0 -u
 		exit
-		
-	elif [ "$num" = 99 ]; then		
+
+	elif [ "$num" = 99 ]; then
 		echo -----------------------------------------------
 		echo -e "感谢：\033[32mClash项目 \033[0m作者\033[36m Dreamacro\033[0m 项目地址：\033[32mhttps://github.com/Dreamacro/clash\033[0m"
 		echo -e "感谢：\033[32mClash.meta项目 \033[0m作者\033[36m MetaCubeX\033[0m 项目地址：\033[32mhttps://github.com/MetaCubeX/Clash.Meta\033[0m"
@@ -1349,9 +1337,9 @@ update(){
 	fi
 }
 #新手引导
-userguide(){
+userguide() {
 
-	forwhat(){
+	forwhat() {
 		echo -----------------------------------------------
 		echo -e "\033[30;46m 欢迎使用ShellClash新手引导！ \033[0m"
 		echo -----------------------------------------------
@@ -1363,35 +1351,35 @@ userguide(){
 		[ -f "$CFG_PATH.bak" ] && echo -e " 3 \033[33m还原之前备份的设置\033[0m"
 		echo -----------------------------------------------
 		read -p "请输入对应数字 > " num
-		if [ -z "$num" ] || [ "$num" -gt 4 ];then
+		if [ -z "$num" ] || [ "$num" -gt 4 ]; then
 			errornum
 			forwhat
-		elif [ "$num" = 1 ];then
+		elif [ "$num" = 1 ]; then
 			redir_mod="Redir模式"
 			ckcmd nft && redir_mod="Nft基础"
-			ckcmd nft && modprobe nft_tproxy &> /dev/null && redir_mod="Nft混合"
+			ckcmd nft && modprobe nft_tproxy &>/dev/null && redir_mod="Nft混合"
 			setconfig redir_mod "$redir_mod"
 			#设置开机启动
 			[ -f /etc/rc.common ] && /etc/init.d/clash enable
-			ckcmd systemctl && systemctl enable clash.service > /dev/null 2>&1
+			ckcmd systemctl && systemctl enable clash.service >/dev/null 2>&1
 			rm -rf $clashdir/.dis_startup
 			autostart=enable
 			#检测IP转发
-			if [ "$(cat /proc/sys/net/ipv4/ip_forward)" = "0" ];then
+			if [ "$(cat /proc/sys/net/ipv4/ip_forward)" = "0" ]; then
 				echo -----------------------------------------------
 				echo -e "\033[33m检测到你的设备尚未开启ip转发，局域网设备将无法正常连接网络，是否立即开启？\033[0m"
 				read -p "是否开启？(1/0) > " res
-				[ "$res" = 1 ] && echo 'net.ipv4.ip_forward = 1' >> /etc/sysctl.conf
+				[ "$res" = 1 ] && echo 'net.ipv4.ip_forward = 1' >>/etc/sysctl.conf
 				[ "$?" = 0 ] && /etc/init.d/procps restart && echo "已成功开启ipv4转发，如未正常开启，请手动重启设备！" || echo "开启失败！请自行谷歌查找当前设备的开启方法！"
 			fi
-		elif [ "$num" = 2 ];then
+		elif [ "$num" = 2 ]; then
 			setconfig redir_mod "纯净模式"
 			setconfig clashcore "clash"
 			setconfig common_ports "未开启"
 			echo -----------------------------------------------
 			echo -e "\033[36m请选择设置本机代理的方式\033[0m"
 			localproxy
-		elif [ "$num" = 3 ];then
+		elif [ "$num" = 3 ]; then
 			mv -f $CFG_PATH.bak $CFG_PATH
 			echo -e "\033[32m脚本设置已还原！\033[0m"
 			echo -e "\033[33m请重新启动脚本！\033[0m"
@@ -1401,7 +1389,7 @@ userguide(){
 	forwhat
 	#检测小内存模式
 	dir_size=$(df $clashdir | awk '{print $4}' | sed 1d)
-	if [ "$dir_size" -lt 10240 ];then
+	if [ "$dir_size" -lt 10240 ]; then
 		echo -----------------------------------------------
 		echo -e "\033[33m检测到你的安装目录空间不足10M，是否开启小闪存模式？\033[0m"
 		echo -e "\033[0m开启后核心及数据库文件将被下载到内存中，这将占用一部分内存空间\033[0m"
@@ -1417,7 +1405,7 @@ userguide(){
 	# read -p "需要安装本地Dashboard面板吗？(1/0) > " res
 	# [ "$res" = 1 ] && checkupdate && setdb
 	#检测及下载根证书
-	if [ -d /etc/ssl/certs -a ! -f '/etc/ssl/certs/ca-certificates.crt' ];then
+	if [ -d /etc/ssl/certs -a ! -f '/etc/ssl/certs/ca-certificates.crt' ]; then
 		echo -----------------------------------------------
 		echo -e "\033[33m当前设备未找到根证书文件\033[0m"
 		echo -----------------------------------------------
@@ -1426,38 +1414,38 @@ userguide(){
 	fi
 	#设置加密DNS
 	$clashdir/start.sh webget $tmpdir/ssl_test https://doh.pub echooff rediron
-	if [ "$?" = "0" ];then
+	if [ "$?" = "0" ]; then
 		dns_nameserver='https://223.5.5.5/dns-query, https://doh.pub/dns-query, tls://dns.rubyfish.cn:853'
 		dns_fallback='https://1.0.0.1/dns-query, https://8.8.4.4/dns-query, https://doh.opendns.com/dns-query'
 		setconfig dns_nameserver \'"$dns_nameserver"\'
-		setconfig dns_fallback \'"$dns_fallback"\' 
+		setconfig dns_fallback \'"$dns_fallback"\'
 	fi
 	rm -rf $tmpdir/ssl_test
 	#开启公网访问
-	sethost(){
+	sethost() {
 		read -p "请输入你的公网IP地址 > " host
 		echo $host | grep -oE '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}'
-		if [ -z "$host" ];then
+		if [ -z "$host" ]; then
 			echo -e "\033[31m请输入正确的IP地址！\033[0m"
 			sethost
 		fi
 	}
-	if ckcmd systemctl;then
+	if ckcmd systemctl; then
 		echo -----------------------------------------------
 		echo -e "\033[32m是否开启公网访问Dashboard面板及socks服务？\033[0m"
 		echo -e "注意当前设备必须有公网IP才能从公网正常访问"
 		echo -e "\033[31m此功能会增加暴露风险请谨慎使用！\033[0m"
 		echo -e "vps设备可能还需要额外在服务商后台开启相关端口"
 		read -p "现在开启？(1/0) > " res
-		if [ "$res" = 1 ];then
+		if [ "$res" = 1 ]; then
 			read -p "请先设置面板访问秘钥 > " secret
 			read -p "请先修改Socks服务端口(1-65535) > " mix_port
 			read -p "请先设置Socks服务密码(账号默认为clash) > " sec
 			[ -z "$sec" ] && authentication=clash:$sec
-			host=$(curl ip.sb  2>/dev/null | grep -oE '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}')
-			if [ -z "$host" ];then
+			host=$(curl ip.sb 2>/dev/null | grep -oE '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}')
+			if [ -z "$host" ]; then
 				sethost
-			fi	
+			fi
 			public_support=已开启
 			setconfig secret $secret
 			setconfig mix_port $mix_port
@@ -1468,10 +1456,10 @@ userguide(){
 	fi
 	#小米设备软固化
 	# if [ "$systype" = "mi_snapshot" ];then
-		# echo -----------------------------------------------
-		# echo -e "\033[33m检测到为小米路由设备，启用软固化可防止路由升级后丢失SSH\033[0m"
-		# read -p "是否启用软固化功能？(1/0) > " res
-		# [ "$res" = 1 ] && setconfig mi_autoSSH 已启用
+	# echo -----------------------------------------------
+	# echo -e "\033[33m检测到为小米路由设备，启用软固化可防止路由升级后丢失SSH\033[0m"
+	# read -p "是否启用软固化功能？(1/0) > " res
+	# [ "$res" = 1 ] && setconfig mi_autoSSH 已启用
 	# fi
 	#提示导入订阅或者配置文件
 	echo -----------------------------------------------
@@ -1484,12 +1472,12 @@ userguide(){
 	echo -----------------------------------------------
 	echo -e "\033[36m很好！现在只需要执行启动就可以愉快的使用了！\033[0m"
 	echo -----------------------------------------------
-	read -p "立即启动clash服务？(1/0) > " res 
+	read -p "立即启动clash服务？(1/0) > " res
 	[ "$res" = 1 ] && clashstart && sleep 2
 	clashsh
 }
 #测试菜单
-testcommand(){
+testcommand() {
 	echo -----------------------------------------------
 	echo -e "\033[30;47m这里是测试命令菜单\033[0m"
 	echo -e "\033[33m如遇问题尽量运行相应命令后截图提交issue或TG讨论组\033[0m"
@@ -1511,30 +1499,30 @@ testcommand(){
 	elif [ "$num" = 1 ]; then
 		$clashdir/start.sh stop
 		echo -----------------------------------------------
-		if $clashdir/clash -v &>/dev/null;then
-			$clashdir/clash -t -d $clashdir	
-			[ "$?" = 0 ] && testover=32m测试通过！|| testover=31m出现错误！请截图后到TG群询问！！！
+		if $clashdir/clash -v &>/dev/null; then
+			$clashdir/clash -t -d $clashdir
+			[ "$?" = 0 ] && testover=32m测试通过！ || testover=31m出现错误！请截图后到TG群询问！！！
 			echo -e "\033[$testover\033[0m"
 		else
 			echo -e "\033[31m你没有安装clash内核或内核不完整，请先前往更新界面安装内核！\033[0m"
 			update
 			testcommand
 		fi
-		exit;
+		exit
 	elif [ "$num" = 2 ]; then
 		echo -----------------------------------------------
-		netstat -ntulp |grep 53
+		netstat -ntulp | grep 53
 		echo -----------------------------------------------
 		echo -e "可以使用\033[44m netstat -ntulp |grep xxx \033[0m来查询任意(xxx)端口"
-		exit;
+		exit
 	elif [ "$num" = 3 ]; then
 		echo -----------------------------------------------
 		openssl speed -multi 4 -evp aes-128-gcm
 		echo -----------------------------------------------
-		exit;
+		exit
 	elif [ "$num" = 4 ]; then
 
-		if [ -n "$(echo $redir_mod | grep 'Nft')" -o "$local_type" = "nftables增强模式" ];then
+		if [ -n "$(echo $redir_mod | grep 'Nft')" -o "$local_type" = "nftables增强模式" ]; then
 			nft list table inet shellclash
 		else
 			echo -------------------Redir---------------------
@@ -1565,18 +1553,24 @@ testcommand(){
 				}
 			}
 		fi
-		exit;
+		exit
 	elif [ "$num" = 5 ]; then
 		echo -----------------------------------------------
 		sed -n '1,40p' $clashdir/config.yaml
 		echo -----------------------------------------------
-		exit;
+		exit
 	elif [ "$num" = 6 ]; then
 		echo "注意：依赖curl(不支持wget)，且测试结果不保证一定准确！"
-		delay=`curl -kx ${authentication}@127.0.0.1:$mix_port -o /dev/null -s -w '%{time_starttransfer}' 'https://google.tw' & { sleep 3 ; kill $! & }` > /dev/null 2>&1
-		delay=`echo |awk "{print $delay*1000}"` > /dev/null 2>&1
+		delay=$(
+			curl -kx ${authentication}@127.0.0.1:$mix_port -o /dev/null -s -w '%{time_starttransfer}' 'https://google.tw' &
+			{
+				sleep 3
+				kill $! &
+			}
+		) >/dev/null 2>&1
+		delay=$(echo | awk "{print $delay*1000}") >/dev/null 2>&1
 		echo -----------------------------------------------
-		if [ `echo ${#delay}` -gt 1 ];then
+		if [ $(echo ${#delay}) -gt 1 ]; then
 			echo -e "\033[32m连接成功！响应时间为："$delay" ms\033[0m"
 		else
 			echo -e "\033[31m连接超时！请重试或检查节点配置！\033[0m"

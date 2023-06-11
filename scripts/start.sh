@@ -178,7 +178,8 @@ getyaml() {
 	[ -z "$rule_link" ] && rule_link=1
 	[ -z "$server_link" ] && server_link=1
 	#前后端订阅服务器地址索引，可在此处添加！
-	Server=$(sed -n ""$server_link"p" <<EOF
+	Server=$(
+		sed -n ""$server_link"p" <<EOF
 https://api.dler.io
 https://api.v1.mk
 https://sub.xeton.dev
@@ -187,7 +188,8 @@ https://sub.maoxiongnet.com
 http://sub2.jwsc.eu.org
 EOF
 	)
-	Config=$(sed -n ""$rule_link"p" <<EOF
+	Config=$(
+		sed -n ""$rule_link"p" <<EOF
 https://github.com/22cs/ShellClash/raw/main/rules/ShellClash.ini
 https://github.com/22cs/ShellClash/raw/main/rules/ShellClash_Mini.ini
 https://github.com/22cs/ShellClash/raw/main/rules/ShellClash_Block.ini
@@ -452,7 +454,7 @@ EOF
 		cat >>$tmpdir/hosts.yaml <<EOF
 hosts:
    'time.android.com': 203.107.6.88
-   'time.facebook.com': 203.107.6.88
+   'time.facebook.com': 203.107.6.88  
 EOF
 		#加载本机hosts
 		sys_hosts=/etc/hosts
