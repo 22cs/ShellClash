@@ -427,7 +427,7 @@ setproxies() {
 		echo -----------------------------------------------
 		echo -e "\033[33m注意节点格式必须是单行,不包括括号,name:必须写在最前,例如：\033[0m"
 		echo -e "\033[36m【name: \"test\", server: 192.168.1.1, port: 12345, type: socks5, udp: true】\033[0m"
-		echo -e "更多写法请参考：\033[32m https://juewuy.github.io/ \033[0m"
+		echo -e "更多写法请参考：\033[32m https://22cs.github.io/ \033[0m"
 		read -p "请输入节点 > " proxy_state_set
 		[ -n "$(echo $proxy_state_set | grep -E "^name:")" ] && set_group_add || errornum
 	}
@@ -771,7 +771,7 @@ setcpucore() {
 	echo -e "\033[31m仅适合脚本无法正确识别核心或核心无法正常运行时使用！\033[0m"
 	echo -e "当前可供在线下载的处理器架构为："
 	echo $cpucore_list | awk -F " " '{for(i=1;i<=NF;i++) {print i" "$i }}'
-	echo -e "不知道如何获取核心版本？请参考：\033[36;4mhttps://juewuy.github.io/bdaz\033[0m"
+	echo -e "不知道如何获取核心版本？请参考：\033[36;4mhttps://22cs.github.io/bdaz\033[0m"
 	echo -----------------------------------------------
 	read -p "请输入对应数字 > " num
 	setcpucore=$(echo $cpucore_list | awk '{print $"'"$num"'"}')
@@ -825,9 +825,21 @@ setcustcore() {
 	read -p "我确认遇到问题可以自行解决[1/0] > " res
 	[ "$res" = '1' ] && {
 		echo -e "\033[33m请选择需要使用的核心！\033[0m"
+		echo -e "1 \033[32m 测试版ClashPre内核 \033[0m(不兼容redir-host)"
+		echo -e "2 \033[32m 最新Meta.Alpha内核  \033[0m"
 		echo -e "3 \033[33m 自定义内核链接 \033[0m"
 		read -p "请输入对应数字 > " num
 		case "$num" in
+		1)
+			clashcore=clashpre
+			custcorelink=https://github.com/22cs/ShellClash/releases/download/clash.premium.latest/clash-linux-$cpucore
+			getcore
+			;;
+		2)
+			clashcore=clash.meta
+			custcorelink=https://github.com/22cs/ShellClash/releases/download/clash.meta.alpha/clash-linux-$cpucore
+			getcore
+			;;
 		3)
 			read -p "请输入自定义内核的链接地址(必须是二进制文件) > " link
 			[ -n "$link" ] && custcorelink="$link"
@@ -1170,7 +1182,7 @@ setserver() {
 		release_url='https://raw.githubusercontent.com/22cs/ShellClash'
 		saveserver
 	elif [ "$num" = 3 ]; then
-		update_url='https://raw.githubusercontent.com/22cs/ShellClash/main'
+		update_url='https://raw.githubusercontent.com/22cs/ShellClash/master'
 		release_url=''
 		saveserver
 	elif [ "$num" = 4 ]; then
@@ -1178,11 +1190,11 @@ setserver() {
 		release_url=''
 		saveserver
 	elif [ "$num" = 5 ]; then
-		update_url='https://fastly.jsdelivr.net/gh/22cs/ShellClash@main'
+		update_url='https://fastly.jsdelivr.net/gh/22cs/ShellClash@master'
 		release_url=''
 		saveserver
 	elif [ "$num" = 6 ]; then
-		update_url='https://raw.staticdn.net/22cs/ShellClash/main'
+		update_url='https://raw.staticdn.net/22cs/ShellClash/master'
 		release_url=''
 		saveserver
 	elif [ "$num" = 7 ]; then
@@ -1202,7 +1214,7 @@ setserver() {
 	elif [ "$num" = 9 ]; then
 		echo -----------------------------------------------
 		echo -e "\033[33m如无法连接，请务必先启用clash服务！！！\033[0m"
-		$clashdir/start.sh webget $tmpdir/clashrelease https://raw.githubusercontent.com/22cs/ShellClash/main/bin/release_version echooff rediroff 2>$tmpdir/clashrelease
+		$clashdir/start.sh webget $tmpdir/clashrelease https://raw.githubusercontent.com/22cs/ShellClash/master/bin/release_version echooff rediroff 2>$tmpdir/clashrelease
 		echo -e "\033[31m请选择想要回退至的release版本：\033[0m"
 		cat $tmpdir/clashrelease | awk '{print " "NR" "$1}'
 		echo -e " 0 返回上级菜单"
@@ -1227,7 +1239,7 @@ setserver() {
 checkupdate() {
 	if [ -z "$release_new" ]; then
 		if [ -n "$release_url" ]; then
-			[ -n "$(echo $release_url | grep 'jsdelivr')" ] && check_url=$release_url@main || check_url=$release_url/main
+			[ -n "$(echo $release_url | grep 'jsdelivr')" ] && check_url=$release_url@master || check_url=$release_url/master
 			$clashdir/start.sh webget $tmpdir/clashversion $check_url/bin/release_version echoon rediroff 2>$tmpdir/clashversion
 			release_new=$(cat $tmpdir/clashversion | head -1)
 			[ -n "$(echo $release_url | grep 'jsdelivr')" ] && update_url=$release_url@$release_new || update_url=$release_url/$release_new
@@ -1302,7 +1314,7 @@ update() {
 	elif [ "$num" = 6 ]; then
 		echo -----------------------------------------------
 		echo -e "PAC配置链接为：\033[30;47m http://$host:$db_port/ui/pac \033[0m"
-		echo -e "PAC的使用教程请参考：\033[4;32mhttps://juewuy.github.io/ehRUeewcv\033[0m"
+		echo -e "PAC的使用教程请参考：\033[4;32mhttps://22cs.github.io/ehRUeewcv\033[0m"
 		sleep 2
 		update
 

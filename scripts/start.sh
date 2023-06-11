@@ -178,8 +178,7 @@ getyaml() {
 	[ -z "$rule_link" ] && rule_link=1
 	[ -z "$server_link" ] && server_link=1
 	#前后端订阅服务器地址索引，可在此处添加！
-	Server=$(
-		sed -n ""$server_link"p" <<EOF
+	Server=$(sed -n ""$server_link"p" <<EOF
 https://api.dler.io
 https://api.v1.mk
 https://sub.xeton.dev
@@ -188,14 +187,13 @@ https://sub.maoxiongnet.com
 http://sub2.jwsc.eu.org
 EOF
 	)
-	Config=$(
-		sed -n ""$rule_link"p" <<EOF
-https://github.com/22cs/ShellClash/raw/main/rules/ShellClash.ini
-https://github.com/22cs/ShellClash/raw/main/rules/ShellClash_Mini.ini
-https://github.com/22cs/ShellClash/raw/main/rules/ShellClash_Block.ini
-https://github.com/22cs/ShellClash/raw/main/rules/ShellClash_Nano.ini
-https://github.com/22cs/ShellClash/raw/main/rules/ShellClash_Full.ini
-https://github.com/22cs/ShellClash/raw/main/rules/ShellClash_Full_Block.ini
+	Config=$(sed -n ""$rule_link"p" <<EOF
+https://github.com/22cs/ShellClash/raw/master/rules/ShellClash.ini
+https://github.com/22cs/ShellClash/raw/master/rules/ShellClash_Mini.ini
+https://github.com/22cs/ShellClash/raw/master/rules/ShellClash_Block.ini
+https://github.com/22cs/ShellClash/raw/master/rules/ShellClash_Nano.ini
+https://github.com/22cs/ShellClash/raw/master/rules/ShellClash_Full.ini
+https://github.com/22cs/ShellClash/raw/master/rules/ShellClash_Full_Block.ini
 https://gist.githubusercontent.com/tindy2013/1fa08640a9088ac8652dbd40c5d2715b/raw/lhie1_clash.ini
 https://gist.githubusercontent.com/tindy2013/1fa08640a9088ac8652dbd40c5d2715b/raw/lhie1_dler.ini
 https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/config/ACL4SSR_Online_Mini_MultiCountry.ini
@@ -317,14 +315,14 @@ modify_yaml() {
 	[ -z "$skip_cert" ] && skip_cert=已开启
 	#默认fake-ip过滤列表
 	fake_ft_df='"*.lan", "time.windows.com", "time.nist.gov", "time.apple.com", "time.asia.apple.com", "*.ntp.org.cn", "*.openwrt.pool.ntp.org", "time1.cloud.tencent.com", "time.ustc.edu.cn", "pool.ntp.org", "ntp.ubuntu.com", "ntp.aliyun.com", "ntp1.aliyun.com", "ntp2.aliyun.com", "ntp3.aliyun.com", "ntp4.aliyun.com", "ntp5.aliyun.com", "ntp6.aliyun.com", "ntp7.aliyun.com", "time1.aliyun.com", "time2.aliyun.com", "time3.aliyun.com", "time4.aliyun.com", "time5.aliyun.com", "time6.aliyun.com", "time7.aliyun.com", "*.time.edu.cn", "time1.apple.com", "time2.apple.com", "time3.apple.com", "time4.apple.com", "time5.apple.com", "time6.apple.com", "time7.apple.com", "time1.google.com", "time2.google.com", "time3.google.com", "time4.google.com", "music.163.com", "*.music.163.com", "*.126.net", "musicapi.taihe.com", "music.taihe.com", "songsearch.kugou.com", "trackercdn.kugou.com", "*.kuwo.cn", "api-jooxtt.sanook.com", "api.joox.com", "joox.com", "y.qq.com", "*.y.qq.com", "streamoc.music.tc.qq.com", "mobileoc.music.tc.qq.com", "isure.stream.qqmusic.qq.com", "dl.stream.qqmusic.qq.com", "aqqmusic.tc.qq.com", "amobile.music.tc.qq.com", "*.xiami.com", "*.music.migu.cn", "music.migu.cn", "*.msftconnecttest.com", "*.msftncsi.com", "localhost.ptlogin2.qq.com", "*.*.*.srv.nintendo.net", "*.*.stun.playstation.net", "xbox.*.*.microsoft.com", "*.*.xboxlive.com", "proxy.golang.org","*.sgcc.com.cn","*.alicdn.com","*.aliyuncs.com"'
-	lan='allow-lan: false'
+	lan='allow-lan: true'
 	log='log-level: info'
 	[ "$ipv6_support" = "已开启" ] && ipv6='ipv6: true' || ipv6='ipv6: false'
 	[ "$ipv6_dns" = "已开启" ] && dns_v6='ipv6: true' || dns_v6='ipv6: false'
 	external="external-controller: 0.0.0.0:$db_port"
 	[ -d $clashdir/ui ] && db_ui=ui
 	if [ "$redir_mod" = "混合模式" -o "$redir_mod" = "Tun模式" ]; then
-		[ "$clashcore" = 'clash.meta' ] && tun_meta=', device: utun, auto-route: true, auto-detect-interface: true'
+		[ "$clashcore" = 'clash.meta' ] && tun_meta=', device: utun, auto-route: false'
 		tun="tun: {enable: true, stack: system$tun_meta}"
 	else
 		tun='tun: {enable: false}'
@@ -332,7 +330,7 @@ modify_yaml() {
 	exper='experimental: {ignore-resolve-fail: true, interface-name: en0}'
 	#Meta内核专属配置
 	[ "$clashcore" = 'clash.meta' ] && {
-		find_process='find-process-mode: "strict"'
+		find_process='find-process-mode: "off"'
 	}
 	#dns配置
 	[ -z "$(cat $clashdir/user.yaml 2>/dev/null | grep '^dns:')" ] && {
@@ -1157,7 +1155,7 @@ bfstart() {
 	#读取配置文件
 	getconfig
 	[ ! -d $bindir/ui ] && mkdir -p $bindir/ui
-	[ -z "$update_url" ] && update_url=https://fastly.jsdelivr.net/gh/22cs/ShellClash@main
+	[ -z "$update_url" ] && update_url=https://fastly.jsdelivr.net/gh/22cs/ShellClash@master
 	#检查yaml配置文件
 	if [ ! -f $clashdir/config.yaml ]; then
 		if [ -n "$Url" -o -n "$Https" ]; then
@@ -1198,7 +1196,7 @@ bfstart() {
 			fi
 			[ -z "$cpucore" ] && source $clashdir/getdate.sh && getcpucore
 			[ -z "$cpucore" ] && logger 找不到设备的CPU信息，请手动指定处理器架构类型！ 31 && setcpucore
-			[ "$update_url" = "https://jwsc.eu.org:8888" ] && [ "$clashcore" != 'clash' ] && update_url=https://fastly.jsdelivr.net/gh/22cs/ShellClash@main
+			[ "$update_url" = "https://jwsc.eu.org:8888" ] && [ "$clashcore" != 'clash' ] && update_url=https://fastly.jsdelivr.net/gh/22cs/ShellClash@master
 			$0 webget $bindir/clash "$update_url/bin/$clashcore/clash-linux-$cpucore"
 			#校验内核
 			chmod +x $bindir/clash 2>/dev/null
