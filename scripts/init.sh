@@ -1,7 +1,7 @@
 #!/bin/sh
 # Copyright (C) 22cs
 
-version=1.8.0-4
+version=1.7.9d
 
 setdir() {
 	dir_avail() {
