@@ -39,7 +39,7 @@ webget(){
 	fi
 }
 error_down(){
-	$echo "请参考 \033[32mhttps://github.com/22cs/ShellClash/blob/main/README_CN.md"
+	$echo "请参考 \033[32mhttps://github.com/22cs/ShellClash/blob/master/README_CN.md"
 	$echo  "\033[33m使用其他安装源重新安装！\033[0m" 
 }
 #安装及初始化
@@ -222,7 +222,7 @@ read -p "请输入相应数字 > " num
 if [ -z $num ];then
 	echo 安装已取消！ && exit 1;
 elif [ "$num" = "2" ];then
-	webget /tmp/clashrelease $url_cdn@main/bin/release_version echoon rediroff 2>/tmp/clashrelease
+	webget /tmp/clashrelease $url_cdn@master/bin/release_version echoon rediroff 2>/tmp/clashrelease
 	if [ "$result" = "200" ];then
 		release_new=$(cat /tmp/clashrelease | head -1)
 		url_dl="$url_cdn@$release_new"

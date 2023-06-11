@@ -4,18 +4,18 @@
 clashdir="$(uci get firewall.ShellClash.path | sed 's/\/misnap_init.sh//')"
 profile=/etc/profile
 
-autoSSH() {
+autoSSH(){
 	#自动开启SSH
 	[ "$(nvram get ssh_en)" = 0 ] && nvram set ssh_en=1 && nvram commit
-	[ "$(uci -c /usr/share/xiaoqiang get xiaoqiang_version.version.CHANNEL)" != 'stable' ] && {
-		uci -c /usr/share/xiaoqiang set xiaoqiang_version.version.CHANNEL='stable'
-		uci -c /usr/share/xiaoqiang commit xiaoqiang_version.version
+    [ "`uci -c /usr/share/xiaoqiang get xiaoqiang_version.version.CHANNEL`" != 'stable' ] && {
+	uci -c /usr/share/xiaoqiang set xiaoqiang_version.version.CHANNEL='stable' 
+    uci -c /usr/share/xiaoqiang commit xiaoqiang_version.version
 	}
 	[ -z "$(pidof dropbear)" -o -z "$(netstat -ntul | grep :22)" ] && {
-		sed -i 's/channel=.*/channel="debug"/g' /etc/init.d/dropbear
-		/etc/init.d/dropbear restart
-		mi_autoSSH_pwd=$(grep 'mi_autoSSH_pwd=' $clashdir/mark | awk -F "=" '{print $2}')
-		[ -n "$mi_autoSSH_pwd" ] && echo -e "$mi_autoSSH_pwd\n$mi_autoSSH_pwd" | passwd root
+	sed -i 's/channel=.*/channel="debug"/g' /etc/init.d/dropbear
+	/etc/init.d/dropbear restart
+	mi_autoSSH_pwd=$(grep 'mi_autoSSH_pwd=' $clashdir/mark | awk -F "=" '{print $2}')
+	[ -n "$mi_autoSSH_pwd" ] && echo -e "$mi_autoSSH_pwd\n$mi_autoSSH_pwd" | passwd root
 	}
 	#备份还原SSH秘钥
 	[ -f $clashdir/dropbear_rsa_host_key ] && ln -sf $clashdir/dropbear_rsa_host_key /etc/dropbear/dropbear_rsa_host_key
@@ -23,8 +23,8 @@ autoSSH() {
 	#自动清理升级备份文件夹
 	rm -rf /data/etc_bak
 }
-tunfix() {
-	ko_dir=$(modinfo ip_tables | grep -Eo '/lib/modules.*/ip_tables.ko' | sed 's|/ip_tables.ko||')
+tunfix(){
+	ko_dir=$(modinfo ip_tables | grep  -Eo '/lib/modules.*/ip_tables.ko' | sed 's|/ip_tables.ko||' )
 	#在/tmp创建并挂载overlay
 	mkdir -p /tmp/overlay
 	mkdir -p /tmp/overlay/upper
@@ -33,7 +33,7 @@ tunfix() {
 	#将tun.ko链接到lib
 	ln -s $clashdir/tun.ko ${ko_dir}/tun.ko
 }
-init() {
+init(){
 	#等待启动完成
 	log_file=$(uci get system.@system[0].log_file)
 	local i=0
@@ -62,11 +62,12 @@ init() {
 }
 
 case "$1" in
-tunfix) tunfix ;;
-init) init ;;
-*)
-	if [ -z $(pidof clash) ]; then
-		init &
-	fi
+	tunfix) tunfix ;;
+	init) init ;;
+	*)
+		if [ -z $(pidof clash) ];then
+			init &
+		fi
 	;;
 esac
+
