@@ -25,7 +25,7 @@ getconfig(){
 	[ -z "$redir_port" ] && redir_port=7892
 	[ -z "$tproxy_port" ] && tproxy_port=7893
 	[ -z "$db_port" ] && db_port=9999
-	[ -z "$dns_port" ] && dns_port=1053
+	[ -z "$dns_port" ] && dns_port=53
 	[ -z "$fwmark" ] && fwmark=$redir_port
 	[ -z "$sniffer" ] && sniffer=已开启
 	#是否代理常用端口
@@ -304,14 +304,14 @@ modify_yaml(){
 	[ -d $clashdir/ui ] && db_ui=ui
 	if [ "$redir_mod" = "混合模式" -o "$redir_mod" = "Tun模式" ];then
 		[ "$clashcore" = 'clash.meta' ] && tun_meta=', device: utun, auto-route: true, auto-detect-interface: true'
-		tun="tun: {enable: true, stack: system$tun_meta}"
+		tun="tun: {enable: true, stack: system, dns-hijack: [0.0.0.0:53]$tun_meta}"
 	else
 		tun='tun: {enable: false}'
 	fi
 	exper='experimental: {ignore-resolve-fail: true, interface-name: en0}'
 	#Meta内核专属配置
 	[ "$clashcore" = 'clash.meta' ] && {
-		find_process='find-process-mode: "strict"'
+		find_process='find-process-mode: "always"'
 	}
 	#dns配置
 	[ -z "$(cat $clashdir/user.yaml 2>/dev/null | grep '^dns:')" ] && { 
@@ -329,7 +329,7 @@ modify_yaml(){
 		fi
 	}
 	#域名嗅探配置
-	[ "$sniffer" = "已启用" ] && [ "$clashcore" = "clash.meta" ] && sniffer_set="sniffer: {enable: true, skip-domain: [Mijia Cloud], sniff: {tls: {ports: [443, 8443]}, http: {ports: [80, 8080-8880]}}}"
+	[ "$sniffer" = "已启用" ] && [ "$clashcore" = "clash.meta" ] && sniffer_set="sniffer: {enable: true, force-dns-mapping: true, skip-domain: [Mijia Cloud], sniff: {tls: {ports: [443, 8443]}, http: {ports: [80, 8080-8880]}}}"
 	[ "$clashcore" = "clashpre" ] && [ "$dns_mod" = "redir_host" ] && exper="experimental: {ignore-resolve-fail: true, interface-name: en0, sniff-tls-sni: true}"
 	
 	#设置目录
@@ -432,6 +432,7 @@ $exper
 $dns
 $sniffer_set
 store-selected: $restore
+tcp-concurrent: true
 $find_process
 EOF
 ###################################
