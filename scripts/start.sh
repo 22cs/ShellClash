@@ -304,14 +304,14 @@ modify_yaml(){
 	[ -d $clashdir/ui ] && db_ui=ui
 	if [ "$redir_mod" = "混合模式" -o "$redir_mod" = "Tun模式" ];then
 		[ "$clashcore" = 'clash.meta' ] && tun_meta=', device: utun, auto-route: true, auto-detect-interface: true'
-		tun="tun: {enable: true, stack: system, dns-hijack: [0.0.0.0:53]$tun_meta}"
+		tun="tun: {enable: true, stack: system, dns-hijack: [any:53]$tun_meta}"
 	else
 		tun='tun: {enable: false}'
 	fi
 	exper='experimental: {ignore-resolve-fail: true, interface-name: en0}'
 	#Meta内核专属配置
 	[ "$clashcore" = 'clash.meta' ] && {
-		find_process='find-process-mode: "always"'
+		find_process='find-process-mode: "strict"'
 	}
 	#dns配置
 	[ -z "$(cat $clashdir/user.yaml 2>/dev/null | grep '^dns:')" ] && { 
@@ -432,7 +432,6 @@ $exper
 $dns
 $sniffer_set
 store-selected: $restore
-tcp-concurrent: true
 $find_process
 EOF
 ###################################
