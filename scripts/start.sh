@@ -291,8 +291,8 @@ EOF`
 }
 modify_yaml(){
 ##########需要变更的配置###########
-	[ -z "$dns_nameserver" ] && dns_nameserver='114.114.114.114, 223.5.5.5'
-	[ -z "$dns_fallback" ] && dns_fallback='1.0.0.1, 8.8.4.4'
+	[ -z "$dns_nameserver" ] && dns_nameserver='https://1.0.0.1/dns-query ,tls://1.0.0.1:853, tls://94.140.14.14:853, tls://9.9.9.9:853'
+	[ -z "$dns_fallback" ] && dns_fallback='tls://8.8.4.4:853, https://dns.google/dns-query, https://cloudflare-dns.com/dns-query, https://dns.quad9.net/dns-query, https://dns.adguard.com/dns-query'
 	[ -z "$skip_cert" ] && skip_cert=已开启
 	#默认fake-ip过滤列表
 	fake_ft_df='"*.lan", "time.windows.com", "time.nist.gov", "time.apple.com", "time.asia.apple.com", "*.ntp.org.cn", "*.openwrt.pool.ntp.org", "time1.cloud.tencent.com", "time.ustc.edu.cn", "pool.ntp.org", "ntp.ubuntu.com", "ntp.aliyun.com", "ntp1.aliyun.com", "ntp2.aliyun.com", "ntp3.aliyun.com", "ntp4.aliyun.com", "ntp5.aliyun.com", "ntp6.aliyun.com", "ntp7.aliyun.com", "time1.aliyun.com", "time2.aliyun.com", "time3.aliyun.com", "time4.aliyun.com", "time5.aliyun.com", "time6.aliyun.com", "time7.aliyun.com", "*.time.edu.cn", "time1.apple.com", "time2.apple.com", "time3.apple.com", "time4.apple.com", "time5.apple.com", "time6.apple.com", "time7.apple.com", "time1.google.com", "time2.google.com", "time3.google.com", "time4.google.com", "music.163.com", "*.music.163.com", "*.126.net", "musicapi.taihe.com", "music.taihe.com", "songsearch.kugou.com", "trackercdn.kugou.com", "*.kuwo.cn", "api-jooxtt.sanook.com", "api.joox.com", "joox.com", "y.qq.com", "*.y.qq.com", "streamoc.music.tc.qq.com", "mobileoc.music.tc.qq.com", "isure.stream.qqmusic.qq.com", "dl.stream.qqmusic.qq.com", "aqqmusic.tc.qq.com", "amobile.music.tc.qq.com", "*.xiami.com", "*.music.migu.cn", "music.migu.cn", "*.msftconnecttest.com", "*.msftncsi.com", "localhost.ptlogin2.qq.com", "*.*.*.srv.nintendo.net", "*.*.stun.playstation.net", "xbox.*.*.microsoft.com", "*.*.xboxlive.com", "proxy.golang.org","*.sgcc.com.cn","*.alicdn.com","*.aliyuncs.com"'
@@ -304,7 +304,7 @@ modify_yaml(){
 	[ -d $clashdir/ui ] && db_ui=ui
 	if [ "$redir_mod" = "混合模式" -o "$redir_mod" = "Tun模式" ];then
 		[ "$clashcore" = 'clash.meta' ] && tun_meta=', device: utun, auto-route: true, auto-detect-interface: true'
-		tun="tun: {enable: true, stack: system, strict-route: true, dns-hijack: [any:53]$tun_meta}"
+		tun="tun: {enable: true, stack: system, strict-route: true, dns-hijack: [any:53, tcp://any:53]$tun_meta}"
 	else
 		tun='tun: {enable: false}'
 	fi
@@ -323,7 +323,7 @@ modify_yaml(){
 			done < $clashdir/fake_ip_filter
 		fi
 		if [ "$dns_mod" = "fake-ip" ];then
-			dns='dns: {enable: true, '$dns_v6', listen: 0.0.0.0:'$dns_port', use-hosts: true, fake-ip-range: 198.18.0.1/16, enhanced-mode: fake-ip, fake-ip-filter: ['${fake_ft_df}${fake_ft_ad}'], default-nameserver: ['$dns_default', 127.0.0.1:53], nameserver: ['$dns_nameserver', 127.0.0.1:53], fallback: ['$dns_fallback'], fallback-filter: {geoip: true}}'
+			dns='dns: {enable: true, '$dns_v6', listen: 0.0.0.0:'$dns_port', use-hosts: true, fake-ip-range: 198.18.0.1/16, enhanced-mode: fake-ip, fake-ip-filter: ['${fake_ft_df}${fake_ft_ad}'], default-nameserver: ['$dns_default'], nameserver: ['$dns_nameserver', 127.0.0.1:53], fallback: ['$dns_fallback'], fallback-filter: {geoip: true}, nameserver-policy: {"geosite:cn": [https://223.5.5.5/dns-query, 192.168.1.1, https://223.6.6.6/dns-query, https://doh.pub/dns-query ]}}'
 		else
 			dns='dns: {enable: true, '$dns_v6', listen: 0.0.0.0:'$dns_port', use-hosts: true, enhanced-mode: redir-host, default-nameserver: ['$dns_default', 127.0.0.1:53], nameserver: ['$dns_nameserver$dns_local'], fallback: ['$dns_fallback'], fallback-filter: {geoip: true}}'
 		fi
